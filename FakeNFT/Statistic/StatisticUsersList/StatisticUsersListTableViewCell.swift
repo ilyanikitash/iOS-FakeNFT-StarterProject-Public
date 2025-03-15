@@ -88,8 +88,8 @@ final class StatisticUsersListTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(with user: StatisticUsersListCellModel) {
-//        placeLabel.text = String(user.place)
+    func configure(with user: StatisticUsersListCellModel, place: Int) {
+        placeLabel.text = String(place)
         avatarImage.image = user.avatar
         nameLabel.text = user.name
         nftCountLabel.text = String(user.nftCount)

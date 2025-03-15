@@ -7,6 +7,7 @@
 import UIKit
 
 final class StatisticUsersListViewController: UIViewController {
+    private var sort: SortCases = .rate
     private let statisticUsersListView = StatisticUsersListView()
     private let mockUsers: [StatisticUsersListCellModel] = [
         StatisticUsersListCellModel(avatar: UIImage(named: "stub_avatar") ?? UIImage(), name: "Alex", nftCount: 45),
@@ -53,19 +54,28 @@ extension StatisticUsersListViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         cell.selectionStyle = .none
-        let user = mockUsers[indexPath.row]
-        cell.configure(with: user)
+        var sortedUsers: [StatisticUsersListCellModel] = []
+        switch sort {
+        case .rate: sortedUsers = mockUsers.sorted { $0.nftCount > $1.nftCount }
+        case .name: sortedUsers = mockUsers.sorted { $0.name < $1.name }
+        }
+        let user = sortedUsers[indexPath.row]
+        cell.configure(with: user, place: indexPath.row + 1)
         return cell
     }
 }
 
 extension StatisticUsersListViewController: StatisticUsersListViewDelegate {
     func clickSortButton() {
-        let nameAction = SortAlertPresenter.createAction(title: SortCases.name.title, style: .default) { _ in
-            print("name sort")
+        let nameAction = SortAlertPresenter.createAction(title: SortCases.name.title, style: .default) { [weak self] _ in
+            guard let self else { return }
+            self.sort = .name
+            statisticUsersListView.usersListTableView.reloadData()
         }
-        let rateAction = SortAlertPresenter.createAction(title: SortCases.rate.title, style: .default) { _ in
-            print("rate sort")
+        let rateAction = SortAlertPresenter.createAction(title: SortCases.rate.title, style: .default) { [weak self] _ in
+            guard let self else { return }
+            self.sort = .rate
+            statisticUsersListView.usersListTableView.reloadData()
         }
         let cancelAction = SortAlertPresenter.createAction(title: "Закрыть", style: .cancel)
         
