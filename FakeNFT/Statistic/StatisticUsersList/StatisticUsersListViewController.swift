@@ -7,14 +7,16 @@
 import UIKit
 
 final class StatisticUsersListViewController: UIViewController {
-    private var sort: SortCases = .rate
+    private var sort: SortCases? {
+        didSet {
+            sortStorage.selectedSort = sort
+        }
+    }
     private let statisticUsersListView = StatisticUsersListView()
-    private let mockUsers: [StatisticUsersListCellModel] = [
-        StatisticUsersListCellModel(avatar: UIImage(named: "stub_avatar") ?? UIImage(), name: "Alex", nftCount: 45),
-        StatisticUsersListCellModel(avatar: UIImage(named: "stub_avatar") ?? UIImage(), name: "Bill", nftCount: 134),
-        StatisticUsersListCellModel(avatar: UIImage(named: "stub_avatar") ?? UIImage(), name: "Alla", nftCount: 67),
-        StatisticUsersListCellModel(avatar: UIImage(named: "stub_avatar") ?? UIImage(), name: "Mads", nftCount: 76),
-    ]
+    private let sortStorage = SortStorage.shared
+    private let usersListService = UsersListService.shared
+    private var usersListServiceObserver: NSObjectProtocol?
+    var users: [UsersListModel] = []
 //MARK: - Lifecycle
     override func loadView() {
         self.view = statisticUsersListView
@@ -24,7 +26,9 @@ final class StatisticUsersListViewController: UIViewController {
         statisticUsersListView.configure()
         setupNavigationBar()
         setupTableView()
+        setupObserver()
         statisticUsersListView.statisticUsersListViewDelegate = self
+        usersListService.fetchUsersNextPage()
     }
     
     private func setupTableView() {
@@ -36,6 +40,32 @@ final class StatisticUsersListViewController: UIViewController {
         navigationController?.navigationBar.backgroundColor = .background
         navigationItem.rightBarButtonItem = statisticUsersListView.sortButton
     }
+    
+    private func setupObserver() {
+        usersListServiceObserver = NotificationCenter.default
+            .addObserver(forName: UsersListService.didChangeNotification,
+                         object: nil,
+                         queue: .main
+            ) { [weak self] _ in
+                guard let self else { return }
+                self.updateTableViewAnimated()
+            }
+    }
+    
+    private func updateTableViewAnimated() {
+        let oldCount = users.count
+        let newCount = usersListService.users.count
+        users = usersListService.users
+        if oldCount != newCount {
+            statisticUsersListView.usersListTableView.performBatchUpdates {
+                var indexPaths: [IndexPath] = []
+                for i in oldCount..<newCount {
+                    indexPaths.append(IndexPath(row: i, section: 0))
+                }
+                statisticUsersListView.usersListTableView.insertRows(at: indexPaths, with: .automatic)
+            } completion: { _ in }
+        }
+    }
 }
 
 extension StatisticUsersListViewController: UITableViewDelegate {
@@ -46,7 +76,7 @@ extension StatisticUsersListViewController: UITableViewDelegate {
 
 extension StatisticUsersListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        mockUsers.count
+        users.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -54,14 +84,15 @@ extension StatisticUsersListViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         cell.selectionStyle = .none
-        var sortedUsers: [StatisticUsersListCellModel] = []
-        switch sort {
-        case .rate: sortedUsers = mockUsers.sorted { $0.nftCount > $1.nftCount }
-        case .name: sortedUsers = mockUsers.sorted { $0.name < $1.name }
-        }
-        let user = sortedUsers[indexPath.row]
+        let user = users[indexPath.row]
         cell.configure(with: user, place: indexPath.row + 1)
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row + 1 == users.count {
+            usersListService.fetchUsersNextPage()
+        }
     }
 }
 
@@ -70,12 +101,18 @@ extension StatisticUsersListViewController: StatisticUsersListViewDelegate {
         let nameAction = SortAlertPresenter.createAction(title: SortCases.name.title, style: .default) { [weak self] _ in
             guard let self else { return }
             self.sort = .name
+            self.users = []
             statisticUsersListView.usersListTableView.reloadData()
+            usersListService.deleteUsersList()
+            usersListService.fetchUsersNextPage()
         }
-        let rateAction = SortAlertPresenter.createAction(title: SortCases.rate.title, style: .default) { [weak self] _ in
+        let rateAction = SortAlertPresenter.createAction(title: SortCases.rating.title, style: .default) { [weak self] _ in
             guard let self else { return }
-            self.sort = .rate
+            self.sort = .rating
+            self.users = []
             statisticUsersListView.usersListTableView.reloadData()
+            usersListService.deleteUsersList()
+            usersListService.fetchUsersNextPage()
         }
         let cancelAction = SortAlertPresenter.createAction(title: "Закрыть", style: .cancel)
         

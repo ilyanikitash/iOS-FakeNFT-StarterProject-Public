@@ -5,6 +5,7 @@
 //  Created by Ilya Nikitash on 3/15/25.
 //
 import UIKit
+import Kingfisher
 
 final class StatisticUsersListTableViewCell: UITableViewCell {
     lazy var placeLabel: UILabel = {
@@ -19,6 +20,7 @@ final class StatisticUsersListTableViewCell: UITableViewCell {
     lazy var avatarImage: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 14
+        imageView.layer.masksToBounds = true
         imageView.image = UIImage(named: "stub_avatar")
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -80,7 +82,7 @@ final class StatisticUsersListTableViewCell: UITableViewCell {
             
             nameLabel.centerYAnchor.constraint(equalTo: cellView.centerYAnchor),
             nameLabel.leadingAnchor.constraint(equalTo: avatarImage.trailingAnchor, constant: 8),
-            nameLabel.trailingAnchor.constraint(equalTo: nftCountLabel.trailingAnchor, constant: -16)
+            nameLabel.trailingAnchor.constraint(equalTo: nftCountLabel.trailingAnchor, constant: -26)
         ])
     }
     
@@ -88,10 +90,12 @@ final class StatisticUsersListTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(with user: StatisticUsersListCellModel, place: Int) {
+    func configure(with user: UsersListModel, place: Int) {
+        if let avatarUrl = URL(string: user.avatar) {
+            avatarImage.kf.setImage(with: avatarUrl, placeholder: UIImage(named: "stub_avatar"))
+        }
         placeLabel.text = String(place)
-        avatarImage.image = user.avatar
         nameLabel.text = user.name
-        nftCountLabel.text = String(user.nftCount)
+        nftCountLabel.text = String(user.nfts.count)
     }
 }

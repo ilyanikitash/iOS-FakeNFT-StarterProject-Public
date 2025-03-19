@@ -8,12 +8,12 @@ import Foundation
 
 enum SortCases: String, CaseIterable {
     case name
-    case rate
+    case rating
     
     var title: String {
         switch self {
         case .name: "По имени"
-        case .rate: "По рейтингу"
+        case .rating: "По рейтингу"
         }
     }
 }
