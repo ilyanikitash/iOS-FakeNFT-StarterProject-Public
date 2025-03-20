@@ -52,6 +52,8 @@
 		EA665CE32D8B53C900BF5DA8 /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA665CE22D8B53B400BF5DA8 /* ProfileService.swift */; };
 		EA665CE52D8B58C200BF5DA8 /* ProfileCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA665CE42D8B58B700BF5DA8 /* ProfileCardView.swift */; };
 		EA665CE72D8C663900BF5DA8 /* UI Table View ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA665CE62D8C661F00BF5DA8 /* UI Table View ext.swift */; };
+		EA665CE92D8C743B00BF5DA8 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA665CE82D8C743800BF5DA8 /* Observable.swift */; };
+		EA665CEB2D8C749D00BF5DA8 /* ProfileViewModelImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA665CEA2D8C748700BF5DA8 /* ProfileViewModelImpl.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -121,6 +123,8 @@
 		EA665CE22D8B53B400BF5DA8 /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
 		EA665CE42D8B58B700BF5DA8 /* ProfileCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCardView.swift; sourceTree = "<group>"; };
 		EA665CE62D8C661F00BF5DA8 /* UI Table View ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UI Table View ext.swift"; sourceTree = "<group>"; };
+		EA665CE82D8C743800BF5DA8 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		EA665CEA2D8C748700BF5DA8 /* ProfileViewModelImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModelImpl.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -378,6 +382,8 @@
 		EA665CDB2D8781DF00BF5DA8 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				EA665CEA2D8C748700BF5DA8 /* ProfileViewModelImpl.swift */,
+				EA665CE82D8C743800BF5DA8 /* Observable.swift */,
 				EA665CE62D8C661F00BF5DA8 /* UI Table View ext.swift */,
 				EA665CE42D8B58B700BF5DA8 /* ProfileCardView.swift */,
 				EA665CE22D8B53B400BF5DA8 /* ProfileService.swift */,
@@ -528,10 +534,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA665CE92D8C743B00BF5DA8 /* Observable.swift in Sources */,
 				3FC8C38B29D242E90081F015 /* ProductDetailsTableViewCell.swift in Sources */,
 				3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */,
 				0C79EE662A76DDFF00EE90EA /* NftDetailViewController.swift in Sources */,
 				E1A1B9DA2AA01CE400C3AFBC /* TabBarController.swift in Sources */,
+				EA665CEB2D8C749D00BF5DA8 /* ProfileViewModelImpl.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
 				0C79EE6A2A76DE1000EE90EA /* NftDetailAssembly.swift in Sources */,
 				EA665CDD2D8781F500BF5DA8 /* ProfileViewController.swift in Sources */,
