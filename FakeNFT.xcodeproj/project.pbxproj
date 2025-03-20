@@ -51,6 +51,7 @@
 		EA665CE12D8AF86500BF5DA8 /* ProfileViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA665CE02D8AF85B00BF5DA8 /* ProfileViewModels.swift */; };
 		EA665CE32D8B53C900BF5DA8 /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA665CE22D8B53B400BF5DA8 /* ProfileService.swift */; };
 		EA665CE52D8B58C200BF5DA8 /* ProfileCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA665CE42D8B58B700BF5DA8 /* ProfileCardView.swift */; };
+		EA665CE72D8C663900BF5DA8 /* UI Table View ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA665CE62D8C661F00BF5DA8 /* UI Table View ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -119,6 +120,7 @@
 		EA665CE02D8AF85B00BF5DA8 /* ProfileViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModels.swift; sourceTree = "<group>"; };
 		EA665CE22D8B53B400BF5DA8 /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
 		EA665CE42D8B58B700BF5DA8 /* ProfileCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCardView.swift; sourceTree = "<group>"; };
+		EA665CE62D8C661F00BF5DA8 /* UI Table View ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UI Table View ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -376,6 +378,7 @@
 		EA665CDB2D8781DF00BF5DA8 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				EA665CE62D8C661F00BF5DA8 /* UI Table View ext.swift */,
 				EA665CE42D8B58B700BF5DA8 /* ProfileCardView.swift */,
 				EA665CE22D8B53B400BF5DA8 /* ProfileService.swift */,
 				EA665CE02D8AF85B00BF5DA8 /* ProfileViewModels.swift */,
@@ -560,6 +563,7 @@
 				3F6806D129CBBE6B00B4F915 /* NetworkClient.swift in Sources */,
 				0CFCB7442A7802440009A829 /* NftDetailInput.swift in Sources */,
 				0C79EE632A76DD1900EE90EA /* RequestConstants.swift in Sources */,
+				EA665CE72D8C663900BF5DA8 /* UI Table View ext.swift in Sources */,
 				EA665CE32D8B53C900BF5DA8 /* ProfileService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
