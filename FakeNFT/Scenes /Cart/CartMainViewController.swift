@@ -9,7 +9,7 @@ import UIKit
 
 final class CartMainViewController: UIViewController {
     // MARK: - Properties
-    var cartNftList = [Any]() // toDo: список добавленных nft в корзину
+    var cartNftList = ["Проверка"] // toDo: список добавленных nft в корзину
     
     // MARK: - UI Elements
     
