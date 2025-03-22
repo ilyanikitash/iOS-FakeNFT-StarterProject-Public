@@ -1,9 +1,10 @@
 import UIKit
 
+
 final class TabBarController: UITabBarController {
-
+    
     var servicesAssembly: ServicesAssembly!
-
+    
     private let catalogTabBarItem = UITabBarItem(
         title: NSLocalizedString("Tab.catalog", comment: ""),
         image: UIImage(systemName: "square.stack.3d.up.fill"),
@@ -15,21 +16,27 @@ final class TabBarController: UITabBarController {
         image: UIImage(named:"Profile"),
         tag: 1
     )
-   
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        let profileController = UINavigationController(rootViewController: ProfileViewController())
         
-        profileController.tabBarItem = profileTabBarItem
+        let profileNavigationController = NavigationController()
+        profileNavigationController.tabBarItem = profileTabBarItem
+        
+        let profileCoordinator = ProfileCoordinatorImpl(navigationController: profileNavigationController,servicesAssembly: servicesAssembly)
+        profileCoordinator.initialScene()
         
         let catalogController = TestCatalogViewController(
             servicesAssembly: servicesAssembly
         )
         catalogController.tabBarItem = catalogTabBarItem
-
-        viewControllers = [catalogController,profileController]
-
+        
+        viewControllers = [catalogController,profileNavigationController]
+        
         view.backgroundColor = .systemBackground
     }
 }
+
+
+
+

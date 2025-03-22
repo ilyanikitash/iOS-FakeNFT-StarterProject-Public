@@ -7,21 +7,22 @@
 
 import Foundation
 
-
 typealias ProfileCompletion = (Result<Profile, Error>) -> Void
 
 protocol ProfileService {
-    func fetchProfile(id: String, _ completion: @escaping ProfileCompletion)
+    func fetchProfile(_ completion: @escaping ProfileCompletion)
 }
 
 final class ProfileServiceImpl: ProfileService {
     private let networkClient: NetworkClient
-
-    init(networkClient: NetworkClient) {
+    private let tokenStorage: TokenStorage
+    
+    init(networkClient: NetworkClient, tokenStorage: TokenStorage) {
         self.networkClient = networkClient
+        self.tokenStorage = tokenStorage
     }
-
-    func fetchProfile(id: String, _ completion: @escaping ProfileCompletion) {
+    
+    func fetchProfile(_ completion: @escaping ProfileCompletion) {
         let nfts = [
             "b3907b86-37c4-4e15-95bc-7f8147a9a660",
             "d6a02bd1-1255-46cd-815b-656174c1d9c0",
@@ -31,21 +32,35 @@ final class ProfileServiceImpl: ProfileService {
             "1e649115-1d4f-4026-ad56-9551a16763ee",
             "7773e33c-ec15-4230-a102-92426a3a6d5a"
         ]
-
+        
         let likes = [
             "c14cf3bc-7470-4eec-8a42-5eaa65f4053c",
             "b2f44171-7dcd-46d7-a6d3-e2109aacf520"
         ]
-
-        let fakeProfile = Profile(name: "Студент Практикума",
-                                  id: ProfileConstants.id, avatar: "https://photo.bank/1.png",
-                                  website: "https://yandex.ru", description: "param1Value",
+        
+        guard let token = try? tokenStorage.retrieveToken() else {
+            fatalError()
+        }
+        
+        let fakeProfile = Profile(name: "Joaquin Phoenix",
+                                  id: token, avatar: "https:photo.bank/1.png",
+                                  website: "https://yandex.ru", description: "Дизайнер из Казани, люблю цифровое искусство и бейглы. В моей коллекции уже 100 NFT, и еще больше — на моём сайте",
                                   likes: likes, nfts: nfts
         )
+        
         completion(.success(fakeProfile))
+        
+        //        let request = ProfileRequest(token: token)
+        //        networkClient.send(request: request, type: Profile.self) { result in
+        //            switch result {
+        //            case .success(let profile):
+        //                completion(.success(profile))
+        //            case .failure(let error):
+        //                completion(.failure(error))
+        //            }
+        //        }
     }
+    
 }
 
-enum ProfileConstants {
-    static let id = "1"
-}
+
