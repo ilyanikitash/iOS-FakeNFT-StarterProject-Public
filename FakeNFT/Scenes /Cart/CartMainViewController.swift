@@ -8,6 +8,8 @@
 import UIKit
 
 final class CartMainViewController: UIViewController {
+    // MARK: - Properties
+    var cartNftList = [Any]() // toDo: список добавленных nft в корзину
     
     // MARK: - UI Elements
     
@@ -57,7 +59,7 @@ final class CartMainViewController: UIViewController {
         button.backgroundColor = UIColor(named: "blackForDarkMode")
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         button.setTitle(NSLocalizedString("К оплате", comment: ""), for: .normal)
-//        button.addTarget(self, action: #selector(), for: .touchUpInside)
+//        button.addTarget(self, action: #selector(), for: .touchUpInside) // toDo: следующий эпик
         return button
     }()
 
@@ -71,6 +73,32 @@ final class CartMainViewController: UIViewController {
         nftListTableView.dataSource = self
         nftListTableView.delegate = self
         nftListTableView.register(NftCellView.self, forCellReuseIdentifier: "cell")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        cartMainScreenSetup()
+
+    }
+    // MARK: - Private Methods
+    private func cartMainScreenSetup() {
+        if cartNftList.isEmpty {
+            nftListTableView.isHidden = true
+            payFieldView.isHidden = true
+            selectedNftCountLabel.isHidden = true
+            priceNftLabel.isHidden = true
+            payButton.isHidden = true
+            
+            placeholderLabel.isHidden = false
+        } else {
+            nftListTableView.isHidden = false
+            payFieldView.isHidden = false
+            selectedNftCountLabel.isHidden = false
+            priceNftLabel.isHidden = false
+            payButton.isHidden = false
+            
+            placeholderLabel.isHidden = true
+        }
     }
     
     private func addSubviews() {
