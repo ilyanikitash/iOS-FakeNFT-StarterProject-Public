@@ -62,7 +62,7 @@ final class CartMainViewController: UIViewController {
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         button.setTitleColor(UIColor(named: "whiteForDarkMode"), for: .normal)
         button.setTitle(NSLocalizedString("К оплате", comment: ""), for: .normal)
-//        button.addTarget(self, action: #selector(), for: .touchUpInside) // toDo: следующий эпик
+        button.addTarget(self, action: #selector(switchToPayScreen), for: .touchUpInside) // toDo: следующий эпик
         return button
     }()
 
@@ -150,6 +150,11 @@ final class CartMainViewController: UIViewController {
             priceNftLabel.trailingAnchor.constraint(equalTo: payFieldView.trailingAnchor, constant: -280),
             priceNftLabel.bottomAnchor.constraint(equalTo: payFieldView.bottomAnchor, constant: -16),
         ])
+    }
+    
+    @objc private func switchToPayScreen() {
+        let payViewController = PayViewController()
+        navigationController?.pushViewController(payViewController, animated: true)
     }
 }
 
