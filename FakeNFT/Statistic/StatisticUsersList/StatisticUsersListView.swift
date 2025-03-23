@@ -27,6 +27,13 @@ final class StatisticUsersListView: UIView {
         return tableView
     }()
     
+    lazy var activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.color = .segmentActive
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        return activityIndicator
+    }()
+    
     weak var statisticUsersListViewDelegate: StatisticUsersListViewDelegate?
     
     func configure() {
@@ -37,12 +44,17 @@ final class StatisticUsersListView: UIView {
             forCellReuseIdentifier: StatisticUsersListTableViewCell.identifier
         )
         addSubview(usersListTableView)
+        addSubview(activityIndicator)
+        
         usersListTableView.separatorStyle = .none
         NSLayoutConstraint.activate([
             usersListTableView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
             usersListTableView.leadingAnchor.constraint(equalTo: leadingAnchor),
             usersListTableView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            usersListTableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
+            usersListTableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
+            
+            activityIndicator.centerXAnchor.constraint(equalTo: centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
     }
     

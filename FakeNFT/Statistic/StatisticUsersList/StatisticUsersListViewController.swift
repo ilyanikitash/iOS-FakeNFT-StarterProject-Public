@@ -30,6 +30,7 @@ final class StatisticUsersListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         statisticUsersListView.configure()
+        showActivityIndicator()
         setupNavigationBar()
         setupTableView()
         setupObserver()
@@ -55,6 +56,7 @@ final class StatisticUsersListViewController: UIViewController {
             ) { [weak self] _ in
                 guard let self else { return }
                 self.updateTableViewAnimated()
+                self.hideActivityIndicator()
             }
     }
     
@@ -71,6 +73,18 @@ final class StatisticUsersListViewController: UIViewController {
                 statisticUsersListView.usersListTableView.insertRows(at: indexPaths, with: .automatic)
             } completion: { _ in }
         }
+    }
+    
+    private func showActivityIndicator() {
+        statisticUsersListView.activityIndicator.startAnimating()
+        statisticUsersListView.usersListTableView.isHidden = true
+        statisticUsersListView.activityIndicator.isHidden = false
+    }
+
+    private func hideActivityIndicator() {
+        statisticUsersListView.activityIndicator.stopAnimating()
+        statisticUsersListView.usersListTableView.isHidden = false
+        statisticUsersListView.activityIndicator.isHidden = true
     }
 }
 
