@@ -11,6 +11,7 @@ final class UserCardView: UIView {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "stub_avatar")
         imageView.layer.cornerRadius = 35
+        imageView.layer.masksToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -39,6 +40,7 @@ final class UserCardView: UIView {
         button.layer.borderWidth = 1
         button.setTitle("Перейти на сайт пользователя", for: .normal)
         button.setTitleColor(.segmentActive, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 15, weight: .regular)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -71,7 +73,6 @@ final class UserCardView: UIView {
             avatar.widthAnchor.constraint(equalToConstant: 70),
             
             nameLabel.leadingAnchor.constraint(equalTo: avatar.trailingAnchor, constant: 16),
-            //nameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 41),
             nameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             nameLabel.centerYAnchor.constraint(equalTo: avatar.centerYAnchor),
             
@@ -82,11 +83,20 @@ final class UserCardView: UIView {
             siteButton.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 28),
             siteButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             siteButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            siteButton.heightAnchor.constraint(equalToConstant: 40),
             
             tableView.topAnchor.constraint(equalTo: siteButton.bottomAnchor, constant: 40),
             tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
         ])
+    }
+    
+    func updateProfile(of user: UsersListModel) {
+        if let avatarUrl = URL(string: user.avatar) {
+            avatar.kf.setImage(with: avatarUrl, placeholder: UIImage(named: "stub_avatar"))
+        }
+        nameLabel.text = user.name
+        descriptionLabel.text = user.description
     }
 }

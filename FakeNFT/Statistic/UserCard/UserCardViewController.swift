@@ -7,25 +7,45 @@
 import UIKit
 
 final class UserCardViewController: UIViewController {
-    private let userCartView = UserCardView()
+    private let userCardView = UserCardView()
+    private let statisticUsersListViewController: StatisticUsersListViewController
+    private var user: UsersListModel = UsersListModel(name: "", avatar: "", description: "", website: "", nfts: [], rating: "", id: "")
+    
+    init(statisticUsersListViewController: StatisticUsersListViewController) {
+        self.statisticUsersListViewController = statisticUsersListViewController
+        super.init(nibName: nil, bundle: nil)
+        statisticUsersListViewController.statisticUsersListVCDelegate = self
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func loadView() {
-        self.view = userCartView
+        self.view = userCardView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        userCartView.configure()
+        userCardView.configure()
         setupTableView()
+        setupNavigationBar()
     }
     
     private func setupTableView() {
-        userCartView.tableView.delegate = self
-        userCartView.tableView.dataSource = self
+        userCardView.tableView.isScrollEnabled = false
+        userCardView.tableView.delegate = self
+        userCardView.tableView.dataSource = self
     }
     
     private func setupNavigationBar() {
-        
+        let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"), style: .plain, target: self, action: #selector(goBack))
+        backButton.tintColor = .segmentActive
+        self.navigationItem.leftBarButtonItem = backButton
+    }
+    
+    @objc private func goBack() {
+        self.dismiss(animated: true, completion: nil)
     }
 }
 
@@ -42,6 +62,15 @@ extension UserCardViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: UserCardTableViewCell.identifier, for: indexPath) as? UserCardTableViewCell else { return UITableViewCell() }
+        cell.accessoryType = .disclosureIndicator
+        cell.configure(with: user)
         return cell
+    }
+}
+
+extension UserCardViewController: StatisticUsersListVCDelegate {
+    func didTapCell(with user: UsersListModel) {
+        self.user = user
+        userCardView.updateProfile(of: user)
     }
 }

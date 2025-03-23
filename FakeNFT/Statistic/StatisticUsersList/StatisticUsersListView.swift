@@ -40,8 +40,8 @@ final class StatisticUsersListView: UIView {
         usersListTableView.separatorStyle = .none
         NSLayoutConstraint.activate([
             usersListTableView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
-            usersListTableView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            usersListTableView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            usersListTableView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            usersListTableView.trailingAnchor.constraint(equalTo: trailingAnchor),
             usersListTableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
         ])
     }

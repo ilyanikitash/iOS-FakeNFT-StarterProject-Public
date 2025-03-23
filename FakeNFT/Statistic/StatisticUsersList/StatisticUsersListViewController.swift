@@ -6,6 +6,10 @@
 //
 import UIKit
 
+protocol StatisticUsersListVCDelegate: AnyObject {
+    func didTapCell(with user: UsersListModel)
+}
+
 final class StatisticUsersListViewController: UIViewController {
     private var sort: SortCases? {
         didSet {
@@ -17,6 +21,8 @@ final class StatisticUsersListViewController: UIViewController {
     private let usersListService = UsersListService.shared
     private var usersListServiceObserver: NSObjectProtocol?
     private var users: [UsersListModel] = []
+    
+    weak var statisticUsersListVCDelegate: StatisticUsersListVCDelegate?
 //MARK: - Lifecycle
     override func loadView() {
         self.view = statisticUsersListView
@@ -72,10 +78,11 @@ extension StatisticUsersListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let userCardVC = UserCardViewController()
+        let userCardVC = UserCardViewController(statisticUsersListViewController: self)
         let userCardVCNavController = UINavigationController(rootViewController: userCardVC)
         userCardVCNavController.setNavigationBarHidden(false, animated: false)
         userCardVCNavController.modalPresentationStyle = .fullScreen
+        statisticUsersListVCDelegate?.didTapCell(with: users[indexPath.row])
         present(userCardVCNavController, animated: true, completion: nil)
     }
     
