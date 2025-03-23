@@ -34,7 +34,9 @@ final class CartMainViewController: UIViewController {
     
     private lazy var payFieldView: UIView = {
         let payView = UIView()
-        payView.backgroundColor = UIColor(red: 247/255, green: 247/255, blue: 248/255, alpha: 1)
+        payView.backgroundColor = UIColor(named: "greyForDarkMode")
+        payView.layer.cornerRadius = 12
+        payView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         return payView
     }()
     
@@ -48,7 +50,7 @@ final class CartMainViewController: UIViewController {
     private lazy var priceNftLabel: UILabel = {
         let priceLabel = UILabel()
         priceLabel.text = "5,43 ETH" // toDo: подгружать с сервака
-        priceLabel.textColor = .systemGreen
+        priceLabel.textColor = UIColor(red: 28/255, green: 159/255, blue: 0/255, alpha: 1)
         priceLabel.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         return priceLabel
     }()
@@ -58,6 +60,7 @@ final class CartMainViewController: UIViewController {
         button.layer.cornerRadius = 16
         button.backgroundColor = UIColor(named: "blackForDarkMode")
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+        button.setTitleColor(UIColor(named: "whiteForDarkMode"), for: .normal)
         button.setTitle(NSLocalizedString("К оплате", comment: ""), for: .normal)
 //        button.addTarget(self, action: #selector(), for: .touchUpInside) // toDo: следующий эпик
         return button
@@ -68,6 +71,7 @@ final class CartMainViewController: UIViewController {
         super.viewDidLoad()
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: sortImage, style: .plain, target: nil, action: nil)
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor(named: "blackForDarkMode")
+        view.backgroundColor = UIColor(named: "whiteForDarkMode")
         addSubviews()
         makeConstraints()
         nftListTableView.dataSource = self

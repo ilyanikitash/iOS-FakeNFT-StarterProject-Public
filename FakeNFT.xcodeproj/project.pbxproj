@@ -369,10 +369,18 @@
 		ED74CF392D8DE9CC005ACCAC /* Cart */ = {
 			isa = PBXGroup;
 			children = (
+				ED74CF502D907954005ACCAC /* CartMainScreen */,
+			);
+			path = Cart;
+			sourceTree = "<group>";
+		};
+		ED74CF502D907954005ACCAC /* CartMainScreen */ = {
+			isa = PBXGroup;
+			children = (
 				ED74CF372D8DE9CC005ACCAC /* CartMainViewController.swift */,
 				ED74CF382D8DE9CC005ACCAC /* NftCellView.swift */,
 			);
-			path = Cart;
+			path = CartMainScreen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

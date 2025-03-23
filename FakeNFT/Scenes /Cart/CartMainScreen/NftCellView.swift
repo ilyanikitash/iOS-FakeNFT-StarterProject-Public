@@ -58,6 +58,11 @@ final class NftCellView: UITableViewCell {
     
     private lazy var deleteButton: UIButton = {
         let button = UIButton()
+//        
+//        let config = UIImage.SymbolConfiguration(pointSize: 16, weight: .medium, scale: .default)
+//        let image = UIImage(systemName: "nftDelete", withConfiguration: config)
+//        button.setImage(image?.withTintColor(UIColor(named: "blackForDarkMode") ?? UIColor(), renderingMode: .alwaysOriginal), for: .normal)
+        
         button.setImage(UIImage(named: "nftDelete"), for: .normal)
         return button
     }()
