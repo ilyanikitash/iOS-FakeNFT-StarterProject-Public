@@ -2,7 +2,12 @@ import UIKit
 
 final class TabBarController: UITabBarController {
 
-    var servicesAssembly: ServicesAssembly!
+ //   var servicesAssembly: ServicesAssembly!
+    
+    let servicesAssembly = ServicesAssembly(
+           networkClient: DefaultNetworkClient(),
+           nftStorage: NftStorageImpl()
+       )
 
     private let catalogTabBarItem = UITabBarItem(
         title: NSLocalizedString("Tab.catalog", comment: ""),
@@ -19,8 +24,9 @@ final class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let profileController = ProfileViewController(servicesAssembly: servicesAssembly)
-        profileController.tabBarItem = profileTabBarItem
+        let profileController = ProfileViewController()
+              profileController.tabBarItem = profileTabBarItem
+        _ = UINavigationController(rootViewController: profileController)
 
         let catalogController = TestCatalogViewController(
             servicesAssembly: servicesAssembly
