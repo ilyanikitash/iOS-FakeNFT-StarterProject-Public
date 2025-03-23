@@ -7,7 +7,7 @@
 import UIKit
 
 final class UserCardView: UIView {
-    lazy var avatar: UIImageView = {
+    private lazy var avatar: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "stub_avatar")
         imageView.layer.cornerRadius = 35
@@ -15,7 +15,7 @@ final class UserCardView: UIView {
         return imageView
     }()
     
-    lazy var nameLabel: UILabel = {
+    private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 22, weight: .bold)
         label.numberOfLines = 1
@@ -23,7 +23,7 @@ final class UserCardView: UIView {
         return label
     }()
     
-    lazy var descriptionLabel: UILabel = {
+    private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.font = .systemFont(ofSize: 13, weight: .regular)
@@ -31,11 +31,14 @@ final class UserCardView: UIView {
         return label
     }()
     
-    lazy var siteButton: UIButton = {
+    private lazy var siteButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = 16
         button.backgroundColor = .background
         button.layer.borderColor = UIColor.segmentActive.cgColor
+        button.layer.borderWidth = 1
+        button.setTitle("Перейти на сайт пользователя", for: .normal)
+        button.setTitleColor(.segmentActive, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -48,6 +51,12 @@ final class UserCardView: UIView {
     
     func configure() {
         backgroundColor = .background
+        
+        tableView.register(
+            UserCardTableViewCell.self,
+            forCellReuseIdentifier: UserCardTableViewCell.identifier
+        )
+        
         addSubview(avatar)
         addSubview(nameLabel)
         addSubview(descriptionLabel)
@@ -76,7 +85,8 @@ final class UserCardView: UIView {
             
             tableView.topAnchor.constraint(equalTo: siteButton.bottomAnchor, constant: 40),
             tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: trailingAnchor)
+            tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
         ])
     }
 }

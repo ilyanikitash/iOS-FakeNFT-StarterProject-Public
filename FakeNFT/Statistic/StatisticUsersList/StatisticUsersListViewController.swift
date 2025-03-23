@@ -16,7 +16,7 @@ final class StatisticUsersListViewController: UIViewController {
     private let sortStorage = SortStorage.shared
     private let usersListService = UsersListService.shared
     private var usersListServiceObserver: NSObjectProtocol?
-    var users: [UsersListModel] = []
+    private var users: [UsersListModel] = []
 //MARK: - Lifecycle
     override func loadView() {
         self.view = statisticUsersListView
@@ -69,6 +69,16 @@ final class StatisticUsersListViewController: UIViewController {
 }
 
 extension StatisticUsersListViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let userCardVC = UserCardViewController()
+        let userCardVCNavController = UINavigationController(rootViewController: userCardVC)
+        userCardVCNavController.setNavigationBarHidden(false, animated: false)
+        userCardVCNavController.modalPresentationStyle = .fullScreen
+        present(userCardVCNavController, animated: true, completion: nil)
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         88
     }
