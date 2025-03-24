@@ -5,7 +5,6 @@
 //  Created by Ilya Nikitash on 3/21/25.
 //
 import UIKit
-import WebKit
 
 protocol OpenUserWebsiteDelegate: AnyObject {
     func openUserWebsite()
@@ -49,12 +48,6 @@ final class UserCardView: UIView {
         button.addTarget(self, action: #selector(didTapSiteButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
-    }()
-    
-    private lazy var webView: WKWebView = {
-        let webView = WKWebView()
-        webView.translatesAutoresizingMaskIntoConstraints = false
-        return webView
     }()
     
     lazy var tableView: UITableView = {
