@@ -6,10 +6,16 @@
 //
 import UIKit
 
+protocol LoadUserWebsiteDelegate: AnyObject {
+    func loadWebsite(of userWebsite: String)
+}
+
 final class UserCardViewController: UIViewController {
     private let userCardView = UserCardView()
     private let statisticUsersListViewController: StatisticUsersListViewController
     private var user: UsersListModel = UsersListModel(name: "", avatar: "", description: "", website: "", nfts: [], rating: "", id: "")
+    
+    weak var loadUserWebsiteDelegate: LoadUserWebsiteDelegate?
     
     init(statisticUsersListViewController: StatisticUsersListViewController) {
         self.statisticUsersListViewController = statisticUsersListViewController
@@ -28,6 +34,7 @@ final class UserCardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         userCardView.configure()
+        userCardView.openUserWebsiteDelegate = self
         setupTableView()
         setupNavigationBar()
     }
@@ -74,3 +81,14 @@ extension UserCardViewController: StatisticUsersListVCDelegate {
         userCardView.updateProfile(of: user)
     }
 }
+
+extension UserCardViewController: OpenUserWebsiteDelegate {
+    func openUserWebsite() {
+        let webViewViewController = WebViewViewController()
+        webViewViewController.modalPresentationStyle = .popover
+        self.loadUserWebsiteDelegate = webViewViewController
+        loadUserWebsiteDelegate?.loadWebsite(of: user.website)
+        present(webViewViewController, animated: true, completion: nil)
+    }
+}
+

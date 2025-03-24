@@ -5,6 +5,11 @@
 //  Created by Ilya Nikitash on 3/21/25.
 //
 import UIKit
+import WebKit
+
+protocol OpenUserWebsiteDelegate: AnyObject {
+    func openUserWebsite()
+}
 
 final class UserCardView: UIView {
     private lazy var avatar: UIImageView = {
@@ -41,8 +46,15 @@ final class UserCardView: UIView {
         button.setTitle("Перейти на сайт пользователя", for: .normal)
         button.setTitleColor(.segmentActive, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 15, weight: .regular)
+        button.addTarget(self, action: #selector(didTapSiteButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
+    }()
+    
+    private lazy var webView: WKWebView = {
+        let webView = WKWebView()
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        return webView
     }()
     
     lazy var tableView: UITableView = {
@@ -50,6 +62,8 @@ final class UserCardView: UIView {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
+    
+    weak var openUserWebsiteDelegate: OpenUserWebsiteDelegate?
     
     func configure() {
         backgroundColor = .background
@@ -90,6 +104,10 @@ final class UserCardView: UIView {
             tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
         ])
+    }
+    
+    @objc private func didTapSiteButton() {
+        openUserWebsiteDelegate?.openUserWebsite()
     }
     
     func updateProfile(of user: UsersListModel) {

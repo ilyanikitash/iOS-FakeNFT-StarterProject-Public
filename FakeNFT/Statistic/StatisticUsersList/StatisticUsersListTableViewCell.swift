@@ -65,12 +65,12 @@ final class StatisticUsersListTableViewCell: UITableViewCell {
         NSLayoutConstraint.activate([
             cellView.topAnchor.constraint(equalTo: contentView.topAnchor),
             cellView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
-            cellView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 35),
+            cellView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 51),
             cellView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             
             placeLabel.centerYAnchor.constraint(equalTo: cellView.centerYAnchor),
-            placeLabel.trailingAnchor.constraint(equalTo: cellView.leadingAnchor, constant: -8),
             placeLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            placeLabel.widthAnchor.constraint(equalToConstant: 27),
             
             avatarImage.leadingAnchor.constraint(equalTo: cellView.leadingAnchor, constant: 16),
             avatarImage.topAnchor.constraint(equalTo: cellView.topAnchor, constant: 26),
