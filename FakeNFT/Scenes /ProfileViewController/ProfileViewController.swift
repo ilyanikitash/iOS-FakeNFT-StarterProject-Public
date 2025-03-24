@@ -5,212 +5,194 @@
 //  Created by Давид Бекоев on 23.03.2025.
 //
 
+import Foundation
 import UIKit
+import WebKit
+import Kingfisher
+import ProgressHUD
+
 
 final class ProfileViewController: UIViewController {
     
-    //MARK: - Layout variables
+    private let servicesAssembly: ServicesAssembly
+    private let profileView = ProfileView()
+    private var profile: Profile?
+    
+    // MARK: - UI Elements
+    
+    
     private lazy var editButton: UIButton = {
+        let button = UIButton()
         let imageButton = UIImage(named: "Edit")
-        let button = UIButton(type: .custom)
-        button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(imageButton, for: .normal)
-        button.addTarget(self, action: #selector(editProfile), for: .touchUpInside)
-        return button
-    }()
-    
-    private lazy var avatarImageView: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "Avatar"))
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.layer.cornerRadius = 35
-        imageView.clipsToBounds = true
-        return imageView
-    }()
-    
-    private lazy var nameLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 22, weight: .bold)
-        label.textColor = .black
-        label.text = "Joaquin Phoenix"
-        return label
-    }()
-    private lazy var bioTextView: UITextView = {
-        let textView = UITextView()
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.font = .systemFont(ofSize: 13, weight: .regular)
-        textView.textColor = .black
-        textView.text = """
-                        Дизайнер из Казани, люблю цифровое искусство
-                        и бейглы. В моей коллекции уже 100+ NFT,
-                        и еще больше — на моём сайте.
-                        Открыт к коллаборациям.
-                        """
-        textView.isEditable = false
-        return textView
-    }()
-    
-    private lazy var urlButton: UIButton = {
-        let button = UIButton(type: .custom)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Joaquin Phoenix.com", for: .normal)
-        button.setTitleColor(.blue, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 15, weight: .regular)
-        button.titleLabel?.textAlignment = .left
-        button.titleLabel?.adjustsFontSizeToFitWidth = true
-        button.addTarget(self, action: #selector(openWebView), for: .touchUpInside)
+        button.addTarget(self, action: #selector(editProfileTapped), for: .touchUpInside)
+        button.widthAnchor.constraint(equalToConstant: 44).isActive = true
+        button.heightAnchor.constraint(equalToConstant: 44).isActive = true
+        
         return button
     }()
     
-    private lazy var tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.register(
-            ProfileTableViewCell.self,
-            forCellReuseIdentifier: ProfileTableViewCell.cellName
-        )
-        tableView.alwaysBounceVertical = false
-        tableView.separatorStyle = .none
-        tableView.backgroundColor = .white
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.allowsMultipleSelection = false
-        tableView.rowHeight = 54
-        return tableView
+    //
+    
+    private lazy var webView: WKWebView = {
+        let webView = WKWebView()
+        return webView
     }()
     
-    private var tableCells: [ProfileCellModel] = []
+    // MARK: - Initialization
+    init(servicesAssembly: ServicesAssembly) {
+        self.servicesAssembly = servicesAssembly
+        super.init(nibName: nil, bundle: nil)
+    }
     
-    //MARK: - Lifecycle
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        view = profileView
+        setupEditButton()
+        loadProfile()
         
-        setupView()
-    }
-}
-
-//MARK: - UITableViewDelegate
-extension ProfileViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableCells[indexPath.row].action()
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
-}
-
-//MARK: - UITableViewDataSource
-extension ProfileViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: ProfileTableViewCell.cellName,
-            for: indexPath
-        ) as? ProfileTableViewCell else {
-            return UITableViewCell()
+        profileView.websiteLabelTapped = { [weak self] address in
+            self?.didTapOnWebsiteLabel(with: address)
         }
-        
-        cell.configureCell(
-            name: tableCells[indexPath.row].name,
-            count: tableCells[indexPath.row].count
-        )
-        
-        return cell
-    }
-}
-
-//MARK: - Private functions
-private extension ProfileViewController {
-    func setupView() {
-        view.backgroundColor = .white
-        navigationController?.navigationBar.isHidden = true
-        
-        fillTableCells()
-        addSubViews()
-        configureConstraints()
+        profileView.aboutDeveloper = { [weak self] address in
+            self?.didTapOnWebsiteLabel(with: address)
+        }
     }
     
-    func addSubViews() {
+    
+    // MARK: - Setup Methods
+    private func setupEditButton() {
+        
         view.addSubview(editButton)
-        view.addSubview(avatarImageView)
-        view.addSubview(nameLabel)
-        view.addSubview(bioTextView)
-        view.addSubview(urlButton)
-        view.addSubview(tableView)
-    }
-    
-    func configureConstraints() {
+        
         NSLayoutConstraint.activate([
             editButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -9),
             editButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            
-            avatarImageView.topAnchor.constraint(equalTo: editButton.bottomAnchor, constant: 20),
-            avatarImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            avatarImageView.heightAnchor.constraint(equalToConstant: 70),
-            avatarImageView.widthAnchor.constraint(equalToConstant: 70),
-            
-            nameLabel.centerYAnchor.constraint(equalTo: avatarImageView.centerYAnchor),
-            nameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),
-            nameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            
-            bioTextView.leadingAnchor.constraint(equalTo: avatarImageView.leadingAnchor),
-            bioTextView.trailingAnchor.constraint(equalTo: nameLabel.trailingAnchor),
-            bioTextView.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 20),
-            bioTextView.heightAnchor.constraint(equalToConstant: 75),
-            
-            urlButton.leadingAnchor.constraint(equalTo: avatarImageView.leadingAnchor),
-            urlButton.topAnchor.constraint(equalTo: bioTextView.bottomAnchor, constant: 8),
-            urlButton.heightAnchor.constraint(equalToConstant: 28),
-            
-            tableView.leadingAnchor.constraint(equalTo: avatarImageView.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: nameLabel.trailingAnchor),
-            tableView.topAnchor.constraint(equalTo: urlButton.bottomAnchor, constant: 40),
-            tableView.heightAnchor.constraint(equalToConstant: 162)
         ])
     }
     
-    func fillTableCells() {
+    
+    // MARK: - Private Methods
+    
+    private func loadProfile() {
+        ProgressHUD.show()
+        servicesAssembly.profileService.loadProfile { [weak self] result in
+            DispatchQueue.main.async {
+                ProgressHUD.dismiss()
+                switch result {
+                case .success(let loadedProfile):
+                    self?.profile = loadedProfile
+                    self?.profileView.updateUI(with: loadedProfile)
+                case .failure(let error):
+                    self?.showErrorAlert(with: error)
+                }
+            }
+        }
+    }
+    
+    private func showErrorAlert(with error: Error) {
+        let alert = UIAlertController(
+            title: NSLocalizedString("Error.title", comment: ""),
+            message: NSLocalizedString("FailedToLoadProfile", comment: ""),
+            preferredStyle: .alert
+        )
         
-        tableCells.append(
-            ProfileCellModel(
-                name: "Мои NFT",
-                count: 112,
-                action: { [weak self] in
-                    guard self != nil else { return }
-                    
-                })
+        let retryAction = UIAlertAction(
+            title: NSLocalizedString("TryAgain", comment: ""),
+            style: .default
+        ) { [weak self] _ in
+            self?.loadProfile()
+        }
+        
+        let cancelAction = UIAlertAction(
+            title: NSLocalizedString("Cancel", comment: ""),
+            style: .cancel,
+            handler: nil
         )
-        tableCells.append(
-            ProfileCellModel(
-                name: "Избранные NFT",
-                count: 11,
-                action: { [weak self] in
-                    guard self != nil else { return }
-                    
-                })
-        )
-        tableCells.append(
-            ProfileCellModel(
-                name: "О разработчике",
-                count: nil,
-                action: { [weak self] in
-                    guard let self = self else { return }
-                    self.openWebView()
-                })
-        )
+        
+        alert.addAction(retryAction)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true, completion: nil)
     }
     
-    @objc
-    func editProfile() {
-        present(EditProfileViewController(), animated: true)
+    // MARK: - Actions
+    
+    @objc private func editProfileTapped() {
+        guard let profile = profile else { return }
+        editProfile(with: profile)
     }
     
-    @objc
-    func openWebView() {
-        let webViewViewController = WebViewViewController()
-        webViewViewController.hidesBottomBarWhenPushed = true
-        present(webViewViewController,animated: true)
-        navigationController?.pushViewController(webViewViewController, animated: true)
+    private func editProfile(with profile: Profile) {
+        let editProfileVC = EditProfileViewController(profile: profile)
+        editProfileVC.delegate = self
+        
+        editProfileVC.modalPresentationStyle = .formSheet
+        present(editProfileVC, animated: true, completion: nil)
+    }
+    
+    private func didTapOnWebsiteLabel(with urlString: String) {
+        var validURLString = urlString
+        
+        
+        if !urlString.hasPrefix("https://") {
+            validURLString = "https://\(urlString)"
+        }
+        
+        guard let url = URL(string: validURLString) else { return }
+        
+        let request = URLRequest(url: url)
+        webView.load(request)
+        
+        let webViewController = UIViewController()
+        webViewController.view.addSubview(webView)
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            webView.topAnchor.constraint(equalTo: webViewController.view.topAnchor),
+            webView.bottomAnchor.constraint(equalTo: webViewController.view.bottomAnchor),
+            webView.leadingAnchor.constraint(equalTo: webViewController.view.leadingAnchor),
+            webView.trailingAnchor.constraint(equalTo: webViewController.view.trailingAnchor)
+        ])
+        
+        webViewController.modalPresentationStyle = .pageSheet
+        present(webViewController, animated: true, completion: nil)
+        
     }
 }
+
+// MARK: - EditProfileDelegate
+extension ProfileViewController: EditProfileDelegate {
+    
+    func didUpdateProfile(_ profile: Profile) {
+        self.profile = profile
+        profileView.updateUI(with: profile)
+        
+        let name = profile.name ?? ""
+        let description = profile.description ?? ""
+        let website = profile.website ?? ""
+        let avatar = profile.avatar ?? ""
+        
+        
+        servicesAssembly.profileService.updateProfile(
+            name: name,
+            description: description,
+            website: website,
+            avatar: avatar
+        ) { result in
+            switch result {
+            case .success(let updatedProfile):
+                print("Profile successfully updated: \(updatedProfile)")
+            case .failure(let error):
+                print("Error updating profile: \(error)")
+            }
+        }
+    }
+}
+

@@ -1,14 +1,12 @@
 import UIKit
 
 final class TabBarController: UITabBarController {
-
- //   var servicesAssembly: ServicesAssembly!
     
     let servicesAssembly = ServicesAssembly(
            networkClient: DefaultNetworkClient(),
            nftStorage: NftStorageImpl()
        )
-
+    
     private let catalogTabBarItem = UITabBarItem(
         title: NSLocalizedString("Tab.catalog", comment: ""),
         image: UIImage(systemName: "square.stack.3d.up.fill"),
@@ -24,16 +22,16 @@ final class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let profileController = ProfileViewController()
-              profileController.tabBarItem = profileTabBarItem
-        _ = UINavigationController(rootViewController: profileController)
-
+        let profileViewController = ProfileViewController(servicesAssembly: servicesAssembly)
+              profileViewController.tabBarItem = profileTabBarItem
+              let profileNavController = UINavigationController(rootViewController: profileViewController)
+        
         let catalogController = TestCatalogViewController(
             servicesAssembly: servicesAssembly
         )
         catalogController.tabBarItem = catalogTabBarItem
 
-        viewControllers = [catalogController,profileController]
+        viewControllers = [catalogController,profileViewController]
 
         view.backgroundColor = .systemBackground
     }
