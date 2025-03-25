@@ -37,16 +37,13 @@ final class EditProfileView: UIView {
         button.layer.cornerRadius = 35
         button.clipsToBounds = true
         button.addTarget(self, action: #selector(avatarImageTapped), for: .touchUpInside)
-        
         button.backgroundColor = UIColor(named: "YBlackColor")?.withAlphaComponent(0.6)
-        
         button.setTitle(NSLocalizedString("ChangePhoto", comment: ""), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 10, weight: .medium)
         button.titleLabel?.numberOfLines = 2
         button.titleLabel?.textAlignment = .center
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 10, weight: .medium)
-        
         return button
     }()
     
@@ -243,11 +240,9 @@ private extension EditProfileView {
         static let closeButtonTrailing: CGFloat = -16
         static let closeButtonTop: CGFloat = 30
         static let buttonSize: CGFloat = 44
-        
         static let avatarTop: CGFloat = 22
         static let avatarSize: CGFloat = 70
         static let avatarButtonSize: CGFloat = 70
-        
         static let loadImageButtonTop: CGFloat = 4
         static let nameLabelTop: CGFloat = 24
         static let textViewTop: CGFloat = 8
