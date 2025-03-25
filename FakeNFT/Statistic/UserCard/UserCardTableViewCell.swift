@@ -7,7 +7,7 @@
 import UIKit
 
 final class UserCardTableViewCell: UITableViewCell {
-    
+    // MARK: - UI Elements
     private lazy var cellLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 17, weight: .bold)
@@ -24,9 +24,9 @@ final class UserCardTableViewCell: UITableViewCell {
         customDisclosureIndicator.frame = CGRect(x: 0, y: 0, width: 8, height: 14)
         return customDisclosureIndicator
     }()
-    
+    // MARK: - Public Properties
     static let identifier = "UserCardTableViewCell"
-    
+    // MARK: - Initializers
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
@@ -41,7 +41,7 @@ final class UserCardTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+    // MARK: - Public Methods
     func configure(with user: UsersListModel) {
         cellLabel.text = "Коллекция NFT (\(user.nfts.count))"
     }

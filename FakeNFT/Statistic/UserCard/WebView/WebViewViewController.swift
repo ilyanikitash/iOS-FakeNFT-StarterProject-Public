@@ -8,8 +8,9 @@ import UIKit
 import WebKit
 
 final class WebViewViewController: UIViewController {
+    // MARK: - Private Properties
     private let webViewView = WebViewView()
-    
+    // MARK: - Lifecycle
     override func loadView() {
         self.view = webViewView
     }
@@ -20,7 +21,7 @@ final class WebViewViewController: UIViewController {
         webViewView.webView.navigationDelegate = self
         webViewView.webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
     }
-    
+    // MARK: - Initializers
     deinit {
         webViewView.webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
     }
@@ -31,7 +32,7 @@ final class WebViewViewController: UIViewController {
         }
     }
 }
-
+// MARK: - WKNavigationDelegate
 extension WebViewViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         webViewView.progressView.isHidden = false
@@ -52,7 +53,7 @@ extension WebViewViewController: WKNavigationDelegate {
         print("Error page preload: \(error.localizedDescription)")
     }
 }
-
+// MARK: - LoadUserWebsiteDelegate
 extension WebViewViewController: LoadUserWebsiteDelegate {
     func loadWebsite(of userWebsite: String) {
         if let url = URL(string: userWebsite) {

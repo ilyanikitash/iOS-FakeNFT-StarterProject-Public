@@ -11,6 +11,7 @@ protocol StatisticUsersListViewDelegate: AnyObject {
 }
 
 final class StatisticUsersListView: UIView {
+    // MARK: - UI Elements
     lazy var sortButton: UIBarButtonItem = {
         let button = UIBarButtonItem(image: UIImage(named: "sort_button"),
                                      style: .plain,
@@ -33,9 +34,14 @@ final class StatisticUsersListView: UIView {
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         return activityIndicator
     }()
-    
+    // MARK: - Public Properties
     weak var statisticUsersListViewDelegate: StatisticUsersListViewDelegate?
-    
+    // MARK: - Selectors
+    @objc private func didTapSortButton() {
+        guard let statisticUsersListViewDelegate else { return }
+        statisticUsersListViewDelegate.clickSortButton()
+    }
+    // MARK: - Public Methods
     func configure() {
         backgroundColor = .background
         
@@ -56,10 +62,5 @@ final class StatisticUsersListView: UIView {
             activityIndicator.centerXAnchor.constraint(equalTo: centerXAnchor),
             activityIndicator.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
-    }
-    
-    @objc private func didTapSortButton() {
-        guard let statisticUsersListViewDelegate else { return }
-        statisticUsersListViewDelegate.clickSortButton()
     }
 }

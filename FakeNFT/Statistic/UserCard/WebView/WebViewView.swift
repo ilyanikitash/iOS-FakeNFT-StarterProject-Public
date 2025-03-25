@@ -8,6 +8,7 @@ import UIKit
 import WebKit
 
 final class WebViewView: UIView {
+    // MARK: - UI Elements
     lazy var webView: WKWebView = {
         let webView = WKWebView()
         webView.translatesAutoresizingMaskIntoConstraints = false
@@ -19,7 +20,7 @@ final class WebViewView: UIView {
         progressView.translatesAutoresizingMaskIntoConstraints = false
         return progressView
     }()
-    
+    // MARK: - Public Methods
     func configure() {
         backgroundColor = .background
         
