@@ -14,15 +14,16 @@ final class TabBarController: UITabBarController {
         super.viewDidLoad()
         
         let profileViewController = ProfileViewController(servicesAssembly: servicesAssembly)
-                    profileViewController.tabBarItem = profileTabBarItem
-                    let profileNavController = UINavigationController(rootViewController: profileViewController)
+              profileViewController.tabBarItem = profileTabBarItem
+              let profileNavController = UINavigationController(rootViewController: profileViewController)
         
         let catalogController = TestCatalogViewController(
             servicesAssembly: servicesAssembly
         )
         catalogController.tabBarItem = catalogTabBarItem
+
         viewControllers = [catalogController,profileViewController]
 
-     //   view.backgroundColor = .systemBackground
+        view.backgroundColor = .systemBackground
     }
 }
