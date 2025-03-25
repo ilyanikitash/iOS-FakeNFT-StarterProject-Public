@@ -379,8 +379,7 @@
 		EA665D0E2D900DFE00BF5DA8 /* ProfileViewController */ = {
 			isa = PBXGroup;
 			children = (
-				EA665D5E2D92DEAF00BF5DA8 /* EditProfileView.swift */,
-				EA665D552D90B39C00BF5DA8 /* EditProfileViewCintroller.swift */,
+				EA665D602D9347E600BF5DA8 /* EditProfile */,
 				EA665D592D90B49E00BF5DA8 /* ProfileRequest.swift */,
 				EA665D572D90B47800BF5DA8 /* ProfileService.swift */,
 				EA665D2F2D90832D00BF5DA8 /* ProfileModel.swift */,
@@ -388,6 +387,15 @@
 				EA665D112D904BAB00BF5DA8 /* ProfileTableViewCell.swift */,
 			);
 			path = ProfileViewController;
+			sourceTree = "<group>";
+		};
+		EA665D602D9347E600BF5DA8 /* EditProfile */ = {
+			isa = PBXGroup;
+			children = (
+				EA665D552D90B39C00BF5DA8 /* EditProfileViewCintroller.swift */,
+				EA665D5E2D92DEAF00BF5DA8 /* EditProfileView.swift */,
+			);
+			path = EditProfile;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
