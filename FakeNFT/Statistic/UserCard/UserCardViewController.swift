@@ -69,7 +69,6 @@ extension UserCardViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: UserCardTableViewCell.identifier, for: indexPath) as? UserCardTableViewCell else { return UITableViewCell() }
-        cell.accessoryType = .disclosureIndicator
         cell.configure(with: user)
         return cell
     }

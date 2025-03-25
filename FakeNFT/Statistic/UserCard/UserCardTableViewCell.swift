@@ -8,7 +8,7 @@ import UIKit
 
 final class UserCardTableViewCell: UITableViewCell {
     
-    lazy var cellLabel: UILabel = {
+    private lazy var cellLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 17, weight: .bold)
         label.numberOfLines = 1
@@ -18,10 +18,19 @@ final class UserCardTableViewCell: UITableViewCell {
         return label
     }()
     
+    private lazy var customDisclosureIndicator: UIImageView = {
+        let customDisclosureIndicator = UIImageView(image: UIImage(systemName: "chevron.forward"))
+        customDisclosureIndicator.tintColor = .segmentActive
+        customDisclosureIndicator.frame = CGRect(x: 0, y: 0, width: 8, height: 14)
+        return customDisclosureIndicator
+    }()
+    
     static let identifier = "UserCardTableViewCell"
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+
+        accessoryView = customDisclosureIndicator
         contentView.addSubview(cellLabel)
         NSLayoutConstraint.activate([
             cellLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
