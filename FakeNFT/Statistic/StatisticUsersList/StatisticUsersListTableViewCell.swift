@@ -8,6 +8,7 @@ import UIKit
 import Kingfisher
 
 final class StatisticUsersListTableViewCell: UITableViewCell {
+    // MARK: - UI Elements
     lazy var placeLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
@@ -51,9 +52,9 @@ final class StatisticUsersListTableViewCell: UITableViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
+    // MARK: - Public Properties
     static let identifier = "StatisticUsersListTableViewCell"
-    
+    // MARK: - Initializers
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(cellView)
@@ -65,12 +66,12 @@ final class StatisticUsersListTableViewCell: UITableViewCell {
         NSLayoutConstraint.activate([
             cellView.topAnchor.constraint(equalTo: contentView.topAnchor),
             cellView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
-            cellView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 35),
-            cellView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            cellView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 51),
+            cellView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             
             placeLabel.centerYAnchor.constraint(equalTo: cellView.centerYAnchor),
-            placeLabel.trailingAnchor.constraint(equalTo: cellView.leadingAnchor, constant: -8),
-            placeLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            placeLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            placeLabel.widthAnchor.constraint(equalToConstant: 27),
             
             avatarImage.leadingAnchor.constraint(equalTo: cellView.leadingAnchor, constant: 16),
             avatarImage.topAnchor.constraint(equalTo: cellView.topAnchor, constant: 26),
@@ -89,7 +90,7 @@ final class StatisticUsersListTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+    // MARK: - Public Methods
     func configure(with user: UsersListModel, place: Int) {
         if let avatarUrl = URL(string: user.avatar) {
             avatarImage.kf.setImage(with: avatarUrl, placeholder: UIImage(named: "stub_avatar"))

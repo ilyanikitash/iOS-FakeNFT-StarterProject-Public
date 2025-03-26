@@ -6,7 +6,14 @@
 //
 import UIKit
 
+protocol StatisticUsersListVCDelegate: AnyObject {
+    func didTapCell(with user: UsersListModel)
+}
+
 final class StatisticUsersListViewController: UIViewController {
+    // MARK: - Public Properties
+    weak var statisticUsersListVCDelegate: StatisticUsersListVCDelegate?
+    // MARK: - Private Properties
     private var sort: SortCases? {
         didSet {
             sortStorage.selectedSort = sort
@@ -16,21 +23,22 @@ final class StatisticUsersListViewController: UIViewController {
     private let sortStorage = SortStorage.shared
     private let usersListService = UsersListService.shared
     private var usersListServiceObserver: NSObjectProtocol?
-    var users: [UsersListModel] = []
-//MARK: - Lifecycle
+    private var users: [UsersListModel] = []
+    // MARK: - Lifecycle
     override func loadView() {
         self.view = statisticUsersListView
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         statisticUsersListView.configure()
+        showActivityIndicator()
         setupNavigationBar()
         setupTableView()
         setupObserver()
         statisticUsersListView.statisticUsersListViewDelegate = self
         usersListService.fetchUsersNextPage()
     }
-    
+    // MARK: - Private Methods
     private func setupTableView() {
         statisticUsersListView.usersListTableView.dataSource = self
         statisticUsersListView.usersListTableView.delegate = self
@@ -49,6 +57,7 @@ final class StatisticUsersListViewController: UIViewController {
             ) { [weak self] _ in
                 guard let self else { return }
                 self.updateTableViewAnimated()
+                self.hideActivityIndicator()
             }
     }
     
@@ -66,14 +75,37 @@ final class StatisticUsersListViewController: UIViewController {
             } completion: { _ in }
         }
     }
-}
+    
+    private func showActivityIndicator() {
+        statisticUsersListView.activityIndicator.startAnimating()
+        statisticUsersListView.usersListTableView.isHidden = true
+        statisticUsersListView.activityIndicator.isHidden = false
+    }
 
+    private func hideActivityIndicator() {
+        statisticUsersListView.activityIndicator.stopAnimating()
+        statisticUsersListView.usersListTableView.isHidden = false
+        statisticUsersListView.activityIndicator.isHidden = true
+    }
+}
+    // MARK: - UITableViewDelegate
 extension StatisticUsersListViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let userCardVC = UserCardViewController(statisticUsersListViewController: self)
+        let userCardVCNavController = UINavigationController(rootViewController: userCardVC)
+        userCardVCNavController.setNavigationBarHidden(false, animated: false)
+        userCardVCNavController.modalPresentationStyle = .fullScreen
+        statisticUsersListVCDelegate?.didTapCell(with: users[indexPath.row])
+        present(userCardVCNavController, animated: true, completion: nil)
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         88
     }
 }
-
+    // MARK: - UITableViewDataSource
 extension StatisticUsersListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         users.count
@@ -95,7 +127,7 @@ extension StatisticUsersListViewController: UITableViewDataSource {
         }
     }
 }
-
+    // MARK: - StatisticUsersListViewDelegate
 extension StatisticUsersListViewController: StatisticUsersListViewDelegate {
     func clickSortButton() {
         let nameAction = SortAlertPresenter.createAction(title: SortCases.name.title, style: .default) { [weak self] _ in
