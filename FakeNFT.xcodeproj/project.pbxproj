@@ -48,7 +48,7 @@
 		EA665D102D900E2400BF5DA8 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA665D0F2D900E1000BF5DA8 /* ProfileViewController.swift */; };
 		EA665D122D904BB000BF5DA8 /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA665D112D904BAB00BF5DA8 /* ProfileTableViewCell.swift */; };
 		EA665D302D90833300BF5DA8 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA665D2F2D90832D00BF5DA8 /* ProfileModel.swift */; };
-		EA665D562D90B3A500BF5DA8 /* EditProfileViewCintroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA665D552D90B39C00BF5DA8 /* EditProfileViewCintroller.swift */; };
+		EA665D562D90B3A500BF5DA8 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA665D552D90B39C00BF5DA8 /* EditProfileViewController.swift */; };
 		EA665D582D90B48400BF5DA8 /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA665D572D90B47800BF5DA8 /* ProfileService.swift */; };
 		EA665D5A2D90B4A600BF5DA8 /* ProfileRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA665D592D90B49E00BF5DA8 /* ProfileRequest.swift */; };
 		EA665D5D2D9197FB00BF5DA8 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = EA665D5C2D9197FB00BF5DA8 /* Kingfisher */; };
@@ -119,7 +119,7 @@
 		EA665D0F2D900E1000BF5DA8 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		EA665D112D904BAB00BF5DA8 /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 		EA665D2F2D90832D00BF5DA8 /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
-		EA665D552D90B39C00BF5DA8 /* EditProfileViewCintroller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewCintroller.swift; sourceTree = "<group>"; };
+		EA665D552D90B39C00BF5DA8 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		EA665D572D90B47800BF5DA8 /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
 		EA665D592D90B49E00BF5DA8 /* ProfileRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRequest.swift; sourceTree = "<group>"; };
 		EA665D5E2D92DEAF00BF5DA8 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
@@ -392,7 +392,7 @@
 		EA665D602D9347E600BF5DA8 /* EditProfile */ = {
 			isa = PBXGroup;
 			children = (
-				EA665D552D90B39C00BF5DA8 /* EditProfileViewCintroller.swift */,
+				EA665D552D90B39C00BF5DA8 /* EditProfileViewController.swift */,
 				EA665D5E2D92DEAF00BF5DA8 /* EditProfileView.swift */,
 			);
 			path = EditProfile;
@@ -564,7 +564,7 @@
 				3FC8C39129D2453B0081F015 /* ExamplePutRequest.swift in Sources */,
 				EA665D582D90B48400BF5DA8 /* ProfileService.swift in Sources */,
 				0CFCB7462A78064B0009A829 /* NftDetailCellModel.swift in Sources */,
-				EA665D562D90B3A500BF5DA8 /* EditProfileViewCintroller.swift in Sources */,
+				EA665D562D90B3A500BF5DA8 /* EditProfileViewController.swift in Sources */,
 				0CFCB74B2A780EA80009A829 /* UIView+Constraints.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
 				0C79EE612A76DCD600EE90EA /* NftByIdRequest.swift in Sources */,

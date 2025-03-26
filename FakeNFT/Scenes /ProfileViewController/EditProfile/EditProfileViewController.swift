@@ -1,5 +1,5 @@
 //
-//  EditProfileViewCintroller.swift
+//  EditProfileViewController.swift
 //  FakeNFT
 //
 //  Created by Давид Бекоев on 24.03.2025.
@@ -50,7 +50,6 @@ final class EditProfileViewController: UIViewController {
             self?.presentImageURLInputDialog()
         }
         
-        view.backgroundColor = .systemBackground
         populateProfileData()
     }
     
@@ -83,29 +82,6 @@ final class EditProfileViewController: UIViewController {
     
     // MARK: - Avatar Handling
     
-    private func presentImageURLInputDialog() {
-        let alertController = UIAlertController(title: NSLocalizedString("EnterImageURL", comment: ""),
-                                                message: NSLocalizedString("PleaseEnterURLForAvatar", comment: ""),
-                                                preferredStyle: .alert)
-        
-        alertController.addTextField { textField in
-            textField.placeholder = NSLocalizedString("AvatarURL", comment: "")
-            textField.keyboardType = .URL
-        }
-        
-        let confirmAction = UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default) { [weak self] _ in
-            if let urlString = alertController.textFields?.first?.text, let url = URL(string: urlString) {
-                self?.chooseNewAvatar(url: url)
-            }
-        }
-        
-        alertController.addAction(confirmAction)
-        
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
-        
-        present(alertController, animated: true, completion: nil)
-    }
-    
     private func chooseNewAvatar(url: URL) {
         updatedAvatarURL = url.absoluteString
         
@@ -116,3 +92,27 @@ final class EditProfileViewController: UIViewController {
 
 
 
+extension EditProfileViewController {
+    private func presentImageURLInputDialog() {
+          let alertController = UIAlertController(title: NSLocalizedString("EnterImageURL", comment: ""),
+                                                  message: NSLocalizedString("PleaseEnterURLForAvatar", comment: ""),
+                                                  preferredStyle: .alert)
+  
+          alertController.addTextField { textField in
+              textField.placeholder = NSLocalizedString("AvatarURL", comment: "")
+              textField.keyboardType = .URL
+          }
+  
+          let confirmAction = UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default) { [weak self] _ in
+              if let urlString = alertController.textFields?.first?.text, let url = URL(string: urlString) {
+                  self?.chooseNewAvatar(url: url)
+              }
+          }
+  
+          alertController.addAction(confirmAction)
+  
+          alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
+  
+          present(alertController, animated: true, completion: nil)
+      }
+}
