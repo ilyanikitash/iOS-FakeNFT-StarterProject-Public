@@ -57,6 +57,14 @@ final class UserCardViewController: UIViewController {
 }
 
 extension UserCardViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let nftCollectionVC = NFTCollectionViewController()
+        let nftCollectionNavController = UINavigationController(rootViewController: nftCollectionVC)
+        nftCollectionNavController.setNavigationBarHidden(false, animated: false)
+        nftCollectionNavController.modalPresentationStyle = .fullScreen
+        present(nftCollectionNavController,animated: true, completion: nil)
+    }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         54
     }
