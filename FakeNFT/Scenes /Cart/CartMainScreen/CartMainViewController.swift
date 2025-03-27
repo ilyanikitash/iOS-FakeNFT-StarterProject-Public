@@ -69,7 +69,7 @@ final class CartMainViewController: UIViewController {
     // MARK: - View Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: sortImage, style: .plain, target: nil, action: nil)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: sortImage, style: .plain, target: self, action: #selector(test))
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor(named: "blackForDarkMode")
         view.backgroundColor = UIColor(named: "whiteForDarkMode")
         addSubviews()
@@ -77,6 +77,10 @@ final class CartMainViewController: UIViewController {
         nftListTableView.dataSource = self
         nftListTableView.delegate = self
         nftListTableView.register(NftCellView.self, forCellReuseIdentifier: "cell")
+    }
+    
+    @objc func test() {
+        print("test")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -154,7 +158,7 @@ final class CartMainViewController: UIViewController {
     
     @objc private func switchToPayScreen() {
         let payViewController = PayViewController()
-        navigationController?.pushViewController(payViewController, animated: true)
+        self.navigationController?.pushViewController(payViewController, animated: true)
     }
 }
 
