@@ -68,6 +68,11 @@ final class PayViewController: UIViewController {
         makeConstraints()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.isHidden = false
+    }
+    
     // MARK: - Private Methods
     private func navigationBarSetup() {
         self.navigationController?.navigationBar.tintColor = UIColor(named: "blackForDarkMode")
