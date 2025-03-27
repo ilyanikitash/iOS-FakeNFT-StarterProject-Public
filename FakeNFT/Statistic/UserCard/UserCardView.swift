@@ -11,6 +11,7 @@ protocol OpenUserWebsiteDelegate: AnyObject {
 }
 
 final class UserCardView: UIView {
+    // MARK: - UI Elements
     private lazy var avatar: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "stub_avatar")
@@ -55,9 +56,13 @@ final class UserCardView: UIView {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
-    
+    // MARK: - Public Properties
     weak var openUserWebsiteDelegate: OpenUserWebsiteDelegate?
-    
+    // MARK: - Selectors
+    @objc private func didTapSiteButton() {
+        openUserWebsiteDelegate?.openUserWebsite()
+    }
+    // MARK: - Public Methods
     func configure() {
         backgroundColor = .background
         
@@ -97,10 +102,6 @@ final class UserCardView: UIView {
             tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
         ])
-    }
-    
-    @objc private func didTapSiteButton() {
-        openUserWebsiteDelegate?.openUserWebsite()
     }
     
     func updateProfile(of user: UsersListModel) {

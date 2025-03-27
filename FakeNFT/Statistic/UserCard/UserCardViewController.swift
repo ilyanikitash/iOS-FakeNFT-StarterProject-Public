@@ -11,12 +11,13 @@ protocol LoadUserWebsiteDelegate: AnyObject {
 }
 
 final class UserCardViewController: UIViewController {
+    // MARK: - Public Properties
+    weak var loadUserWebsiteDelegate: LoadUserWebsiteDelegate?
+    // MARK: - Private Properties
     private let userCardView = UserCardView()
     private let statisticUsersListViewController: StatisticUsersListViewController
     private var user: UsersListModel = UsersListModel(name: "", avatar: "", description: "", website: "", nfts: [], rating: "", id: "")
-    
-    weak var loadUserWebsiteDelegate: LoadUserWebsiteDelegate?
-    
+    // MARK: - Initializers
     init(statisticUsersListViewController: StatisticUsersListViewController) {
         self.statisticUsersListViewController = statisticUsersListViewController
         super.init(nibName: nil, bundle: nil)
@@ -26,7 +27,7 @@ final class UserCardViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+    // MARK: - View Life Cycles
     override func loadView() {
         self.view = userCardView
     }
@@ -38,7 +39,11 @@ final class UserCardViewController: UIViewController {
         setupTableView()
         setupNavigationBar()
     }
-    
+    // MARK: - Selectors
+    @objc private func goBack() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    // MARK: - Private Methods
     private func setupTableView() {
         userCardView.tableView.isScrollEnabled = false
         userCardView.tableView.delegate = self
@@ -50,12 +55,8 @@ final class UserCardViewController: UIViewController {
         backButton.tintColor = .segmentActive
         self.navigationItem.leftBarButtonItem = backButton
     }
-    
-    @objc private func goBack() {
-        self.dismiss(animated: true, completion: nil)
-    }
 }
-
+// MARK: - UITableViewDelegate
 extension UserCardViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -69,7 +70,7 @@ extension UserCardViewController: UITableViewDelegate {
         54
     }
 }
-
+// MARK: - UITableViewDataSource
 extension UserCardViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         1
@@ -81,14 +82,14 @@ extension UserCardViewController: UITableViewDataSource {
         return cell
     }
 }
-
+// MARK: - StatisticUsersListVCDelegate
 extension UserCardViewController: StatisticUsersListVCDelegate {
     func didTapCell(with user: UsersListModel) {
         self.user = user
         userCardView.updateProfile(of: user)
     }
 }
-
+// MARK: - OpenUserWebsiteDelegate
 extension UserCardViewController: OpenUserWebsiteDelegate {
     func openUserWebsite() {
         let webViewViewController = WebViewViewController()

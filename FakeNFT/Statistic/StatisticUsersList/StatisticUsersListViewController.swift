@@ -11,6 +11,9 @@ protocol StatisticUsersListVCDelegate: AnyObject {
 }
 
 final class StatisticUsersListViewController: UIViewController {
+    // MARK: - Public Properties
+    weak var statisticUsersListVCDelegate: StatisticUsersListVCDelegate?
+    // MARK: - Private Properties
     private var sort: SortCases? {
         didSet {
             sortStorage.selectedSort = sort
@@ -21,9 +24,7 @@ final class StatisticUsersListViewController: UIViewController {
     private let usersListService = UsersListService.shared
     private var usersListServiceObserver: NSObjectProtocol?
     private var users: [UsersListModel] = []
-    
-    weak var statisticUsersListVCDelegate: StatisticUsersListVCDelegate?
-//MARK: - Lifecycle
+    // MARK: - Lifecycle
     override func loadView() {
         self.view = statisticUsersListView
     }
@@ -37,7 +38,7 @@ final class StatisticUsersListViewController: UIViewController {
         statisticUsersListView.statisticUsersListViewDelegate = self
         usersListService.fetchUsersNextPage()
     }
-    
+    // MARK: - Private Methods
     private func setupTableView() {
         statisticUsersListView.usersListTableView.dataSource = self
         statisticUsersListView.usersListTableView.delegate = self
@@ -87,7 +88,7 @@ final class StatisticUsersListViewController: UIViewController {
         statisticUsersListView.activityIndicator.isHidden = true
     }
 }
-
+    // MARK: - UITableViewDelegate
 extension StatisticUsersListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -104,7 +105,7 @@ extension StatisticUsersListViewController: UITableViewDelegate {
         88
     }
 }
-
+    // MARK: - UITableViewDataSource
 extension StatisticUsersListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         users.count
@@ -126,7 +127,7 @@ extension StatisticUsersListViewController: UITableViewDataSource {
         }
     }
 }
-
+    // MARK: - StatisticUsersListViewDelegate
 extension StatisticUsersListViewController: StatisticUsersListViewDelegate {
     func clickSortButton() {
         let nameAction = SortAlertPresenter.createAction(title: SortCases.name.title, style: .default) { [weak self] _ in

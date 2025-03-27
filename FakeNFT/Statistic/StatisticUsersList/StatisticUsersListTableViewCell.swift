@@ -8,6 +8,7 @@ import UIKit
 import Kingfisher
 
 final class StatisticUsersListTableViewCell: UITableViewCell {
+    // MARK: - UI Elements
     lazy var placeLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
@@ -51,9 +52,9 @@ final class StatisticUsersListTableViewCell: UITableViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
+    // MARK: - Public Properties
     static let identifier = "StatisticUsersListTableViewCell"
-    
+    // MARK: - Initializers
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(cellView)
@@ -89,7 +90,7 @@ final class StatisticUsersListTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+    // MARK: - Public Methods
     func configure(with user: UsersListModel, place: Int) {
         if let avatarUrl = URL(string: user.avatar) {
             avatarImage.kf.setImage(with: avatarUrl, placeholder: UIImage(named: "stub_avatar"))
