@@ -159,10 +159,12 @@ final class PayViewController: UIViewController {
         let successfulPayScreen = SuccessfulPayScreen()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
-            if self?.payStatus == true {
-                self?.navigationController?.pushViewController(successfulPayScreen, animated: true)
+            guard let self else { return }
+            
+            if self.payStatus == true {
+                self.navigationController?.pushViewController(successfulPayScreen, animated: true)
             } else {
-                self?.showAlert(vc: successfulPayScreen)
+                self.showAlert(vc: successfulPayScreen)
             }
         }
     }
