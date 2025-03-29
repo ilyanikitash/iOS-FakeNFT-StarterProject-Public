@@ -53,6 +53,7 @@
 		EA665D5A2D90B4A600BF5DA8 /* ProfileRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA665D592D90B49E00BF5DA8 /* ProfileRequest.swift */; };
 		EA665D5D2D9197FB00BF5DA8 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = EA665D5C2D9197FB00BF5DA8 /* Kingfisher */; };
 		EA665D5F2D92DED100BF5DA8 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA665D5E2D92DEAF00BF5DA8 /* EditProfileView.swift */; };
+		EA665D662D98478700BF5DA8 /* My NFT.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA665D652D98476D00BF5DA8 /* My NFT.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -123,6 +124,7 @@
 		EA665D572D90B47800BF5DA8 /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
 		EA665D592D90B49E00BF5DA8 /* ProfileRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRequest.swift; sourceTree = "<group>"; };
 		EA665D5E2D92DEAF00BF5DA8 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
+		EA665D652D98476D00BF5DA8 /* My NFT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "My NFT.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -333,6 +335,7 @@
 		3F6806D829CC979D00B4F915 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				EA665D652D98476D00BF5DA8 /* My NFT.swift */,
 				0CFCB7412A78013E0009A829 /* Nft.swift */,
 			);
 			path = Network;
@@ -552,6 +555,7 @@
 				0CF2C2DD2A783CE600FDC837 /* ErrorView.swift in Sources */,
 				0C79EE682A76DE0900EE90EA /* NftDetailPresenter.swift in Sources */,
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
+				EA665D662D98478700BF5DA8 /* My NFT.swift in Sources */,
 				0CFCB7402A78002A0009A829 /* ExamplePutService.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				0CF2C2DB2A783C1B00FDC837 /* LoadingView.swift in Sources */,
