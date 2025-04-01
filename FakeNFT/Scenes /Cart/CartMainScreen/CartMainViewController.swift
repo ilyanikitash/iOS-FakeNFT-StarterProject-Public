@@ -8,9 +8,9 @@
 import UIKit
 
 final class CartMainViewController: UIViewController {
-    // MARK: - Properties
-    var cartNftList = ["Проверка"] // toDo: список добавленных nft в корзину
-    
+    // MARK: - Singletone
+    private let storage = Storage.shared
+    private let paymentNetworkService = PaymentNetworkService.shared
     // MARK: - UI Elements
     
     private lazy var placeholderLabel: UILabel = {
@@ -29,6 +29,7 @@ final class CartMainViewController: UIViewController {
         let list = UITableView()
         list.separatorStyle = .none
         list.backgroundColor = .clear
+        list.allowsSelection = false
         return list
     }()
     
@@ -85,12 +86,14 @@ final class CartMainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.tabBarController?.tabBar.isHidden = false
         cartMainScreenSetup()
-
+        labelsSetup()
     }
+    
     // MARK: - Private Methods
     private func cartMainScreenSetup() {
-        if cartNftList.isEmpty {
+        if storage.mockCartNfts.isEmpty {
             nftListTableView.isHidden = true
             payFieldView.isHidden = true
             selectedNftCountLabel.isHidden = true
@@ -107,6 +110,16 @@ final class CartMainViewController: UIViewController {
             
             placeholderLabel.isHidden = true
         }
+    }
+    
+    private func labelsSetup() {
+        selectedNftCountLabel.text = "\(storage.mockCartNfts.count) NFT"
+        
+        var sumPrice = Float()
+        for i in storage.mockCartNfts {
+            sumPrice += i.price
+        }
+        priceNftLabel.text = "\(NSString(format: "%.2f", sumPrice)) ETH"
     }
     
     private func addSubviews() {
@@ -165,13 +178,18 @@ final class CartMainViewController: UIViewController {
 extension CartMainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { 1 }
     
-    func numberOfSections(in tableView: UITableView) -> Int { 1 } // toDo: подгружать с сервака
+    func numberOfSections(in tableView: UITableView) -> Int { storage.mockCartNfts.count } // toDo: подгружать с сервака
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat { 140 }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? NftCellView else { return NftCellView()}
+
+        cell.cellSetup(nftImageUrl: URL(string: storage.mockCartNfts[indexPath.section].images.first ?? "no url") ?? URL(fileURLWithPath: "no url"),
+                       nftNameLabel: storage.mockCartNfts[indexPath.section].name,
+                       priceValueLabel: "\(storage.mockCartNfts[indexPath.section].price) ETH")
+        
         return cell
     }
-    
+
 }

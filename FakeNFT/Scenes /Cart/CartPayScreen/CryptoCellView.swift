@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class CryptoCellView: UICollectionViewCell {
     // MARK: - Private Properties
@@ -66,7 +67,7 @@ final class CryptoCellView: UICollectionViewCell {
             cryptoName.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 52),
             
             cryptoNameShort.heightAnchor.constraint(equalToConstant: 18),
-            cryptoNameShort.widthAnchor.constraint(equalToConstant: 40),
+            cryptoNameShort.widthAnchor.constraint(equalToConstant: 70),
             cryptoNameShort.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 23),
             cryptoNameShort.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 52),
             
@@ -74,10 +75,11 @@ final class CryptoCellView: UICollectionViewCell {
     }
     
     // MARK: - Public Methods
-    func cellSetup(image: UIImage, name: String, shortName: String) {
+    func cellSetup(imageUrl: URL, name: String, shortName: String) {
         contentView.layer.cornerRadius = 12
-        cryptoIcon.image = image
+        cryptoIcon.kf.setImage(with: imageUrl)
         cryptoName.text = name
         cryptoNameShort.text = shortName
+        
     }
 }

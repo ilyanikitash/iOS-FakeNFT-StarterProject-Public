@@ -52,6 +52,11 @@
 		ED74CF582D91D1E7005ACCAC /* CryptoCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED74CF572D91D1E7005ACCAC /* CryptoCellView.swift */; };
 		ED74CF5A2D91D6AB005ACCAC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED74CF592D91D6AB005ACCAC /* Constants.swift */; };
 		ED74CF5E2D95CD6F005ACCAC /* SuccessfulPayScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED74CF5D2D95CD6F005ACCAC /* SuccessfulPayScreen.swift */; };
+		ED74CF662D98780E005ACCAC /* PaymentNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED74CF652D98780E005ACCAC /* PaymentNetworkService.swift */; };
+		ED74CF6C2D993193005ACCAC /* URLSession+data.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED74CF6B2D993193005ACCAC /* URLSession+data.swift.swift */; };
+		ED74CF6E2D99334D005ACCAC /* PaymentStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED74CF6D2D99334D005ACCAC /* PaymentStructs.swift */; };
+		ED74CF712D99A4CB005ACCAC /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED74CF702D99A4CB005ACCAC /* Storage.swift */; };
+		ED74CF732D9C50CD005ACCAC /* UIBlockingProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED74CF722D9C50CD005ACCAC /* UIBlockingProgressHUD.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -121,6 +126,11 @@
 		ED74CF572D91D1E7005ACCAC /* CryptoCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoCellView.swift; sourceTree = "<group>"; };
 		ED74CF592D91D6AB005ACCAC /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		ED74CF5D2D95CD6F005ACCAC /* SuccessfulPayScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessfulPayScreen.swift; sourceTree = "<group>"; };
+		ED74CF652D98780E005ACCAC /* PaymentNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentNetworkService.swift; sourceTree = "<group>"; };
+		ED74CF6B2D993193005ACCAC /* URLSession+data.swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+data.swift.swift"; sourceTree = "<group>"; };
+		ED74CF6D2D99334D005ACCAC /* PaymentStructs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentStructs.swift; sourceTree = "<group>"; };
+		ED74CF702D99A4CB005ACCAC /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
+		ED74CF722D9C50CD005ACCAC /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -200,6 +210,7 @@
 			isa = PBXGroup;
 			children = (
 				0CFCB74D2A7817DC0009A829 /* NftStorage.swift */,
+				ED74CF702D99A4CB005ACCAC /* Storage.swift */,
 			);
 			path = MemoryStorage;
 			sourceTree = "<group>";
@@ -324,6 +335,7 @@
 				3F6806D029CBBE6B00B4F915 /* NetworkClient.swift */,
 				3F6806D229CBBE9600B4F915 /* NetworkRequest.swift */,
 				3F6806D429CBBEC700B4F915 /* NetworkTask.swift */,
+				ED74CF6F2D993DC6005ACCAC /* Payment */,
 			);
 			path = NetworkClient;
 			sourceTree = "<group>";
@@ -332,6 +344,7 @@
 			isa = PBXGroup;
 			children = (
 				0CFCB7412A78013E0009A829 /* Nft.swift */,
+				ED74CF6D2D99334D005ACCAC /* PaymentStructs.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -378,6 +391,7 @@
 		ED74CF392D8DE9CC005ACCAC /* Cart */ = {
 			isa = PBXGroup;
 			children = (
+				ED74CF722D9C50CD005ACCAC /* UIBlockingProgressHUD.swift */,
 				ED74CF502D907954005ACCAC /* CartMainScreen */,
 				ED74CF522D907AC9005ACCAC /* CartPayScreen */,
 			);
@@ -401,6 +415,15 @@
 				ED74CF572D91D1E7005ACCAC /* CryptoCellView.swift */,
 			);
 			path = CartPayScreen;
+			sourceTree = "<group>";
+		};
+		ED74CF6F2D993DC6005ACCAC /* Payment */ = {
+			isa = PBXGroup;
+			children = (
+				ED74CF652D98780E005ACCAC /* PaymentNetworkService.swift */,
+				ED74CF6B2D993193005ACCAC /* URLSession+data.swift.swift */,
+			);
+			path = Payment;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -547,13 +570,16 @@
 				3FC8C38B29D242E90081F015 /* ProductDetailsTableViewCell.swift in Sources */,
 				3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */,
 				0C79EE662A76DDFF00EE90EA /* NftDetailViewController.swift in Sources */,
+				ED74CF662D98780E005ACCAC /* PaymentNetworkService.swift in Sources */,
 				ED74CF582D91D1E7005ACCAC /* CryptoCellView.swift in Sources */,
 				E1A1B9DA2AA01CE400C3AFBC /* TabBarController.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
 				0C79EE6A2A76DE1000EE90EA /* NftDetailAssembly.swift in Sources */,
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
+				ED74CF6E2D99334D005ACCAC /* PaymentStructs.swift in Sources */,
 				0CFCB7422A78013E0009A829 /* Nft.swift in Sources */,
 				0CF2C2DD2A783CE600FDC837 /* ErrorView.swift in Sources */,
+				ED74CF6C2D993193005ACCAC /* URLSession+data.swift.swift in Sources */,
 				ED74CF5E2D95CD6F005ACCAC /* SuccessfulPayScreen.swift in Sources */,
 				0C79EE682A76DE0900EE90EA /* NftDetailPresenter.swift in Sources */,
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
@@ -569,6 +595,7 @@
 				ED74CF3A2D8DE9CC005ACCAC /* NftCellView.swift in Sources */,
 				ED74CF3B2D8DE9CC005ACCAC /* CartMainViewController.swift in Sources */,
 				0CFCB7462A78064B0009A829 /* NftDetailCellModel.swift in Sources */,
+				ED74CF712D99A4CB005ACCAC /* Storage.swift in Sources */,
 				ED74CF562D907B20005ACCAC /* PayViewController.swift in Sources */,
 				0CFCB74B2A780EA80009A829 /* UIView+Constraints.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
@@ -581,6 +608,7 @@
 				0CFCB7442A7802440009A829 /* NftDetailInput.swift in Sources */,
 				0C79EE632A76DD1900EE90EA /* RequestConstants.swift in Sources */,
 				ED74CF5A2D91D6AB005ACCAC /* Constants.swift in Sources */,
+				ED74CF732D9C50CD005ACCAC /* UIBlockingProgressHUD.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

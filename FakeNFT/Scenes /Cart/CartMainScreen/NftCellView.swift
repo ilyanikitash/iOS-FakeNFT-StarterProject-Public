@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class NftCellView: UITableViewCell {
     
@@ -13,13 +14,14 @@ final class NftCellView: UITableViewCell {
     private lazy var image: UIImageView = {
         let image = UIImageView()
         image.layer.cornerRadius = 12
-        image.layer.backgroundColor = UIColor.green.cgColor // toDo: подгружать с сервака
+//        image.layer.backgroundColor = UIColor.green.cgColor // toDo: подгружать с сервака
+        image.clipsToBounds = true
         return image
     }()
     
     private lazy var nftNameLabel: UILabel = {
         let label = UILabel()
-        label.text = "April" // toDo: подгружать с сервака
+//        label.text = "April" // toDo: подгружать с сервака
         label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         return label
     }()
@@ -51,7 +53,7 @@ final class NftCellView: UITableViewCell {
 
     private lazy var priceValueLabel: UILabel = {
         let label = UILabel()
-        label.text = "13 ETH" // toDo: подгружать с сервака
+//        label.text = "13 ETH" // toDo: подгружать с сервака
         label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         return label
     }()
@@ -78,8 +80,11 @@ final class NftCellView: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func cellSetup() {
-        // toDo: настройка параметров ячейки взависимости от загруженных данных
+    func cellSetup(nftImageUrl: URL, nftNameLabel: String, priceValueLabel: String) {
+        image.kf.indicatorType = .activity
+        image.kf.setImage(with: nftImageUrl)
+        self.nftNameLabel.text = nftNameLabel
+        self.priceValueLabel.text = priceValueLabel
     }
 
     // MARK: - Private Methods
@@ -109,7 +114,7 @@ final class NftCellView: UITableViewCell {
             nftNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 24),
             nftNameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 144),
             nftNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -94),
-            nftNameLabel.widthAnchor.constraint(equalToConstant: 100),
+            nftNameLabel.widthAnchor.constraint(equalToConstant: 200),
             
             ratingPlaceholder.heightAnchor.constraint(equalToConstant: 13),
             ratingPlaceholder.widthAnchor.constraint(equalToConstant: 75),

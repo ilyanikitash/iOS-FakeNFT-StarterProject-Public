@@ -9,8 +9,13 @@ import SafariServices
 import UIKit
 
 final class PayViewController: UIViewController {
+    // MARK: - Singletone
+    private let storage = Storage.shared
+    private let paymentNetworkService = PaymentNetworkService.shared
+    
     // MARK: - Private Properties
     private var payStatus: Bool = /*true*/ false //для контроля реализации кода успешной/неуспешной оплаты
+    private var currencyID = String()
     
     private lazy var cryptoCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -58,6 +63,8 @@ final class PayViewController: UIViewController {
     // MARK: - View Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
+        collectionViewSetup()
+        print("\(storage.forCurrenciesCollection)")
         self.tabBarController?.tabBar.isHidden = true
         view.backgroundColor = UIColor(named: "whiteForDarkMode")
         navigationBarSetup()
@@ -82,6 +89,48 @@ final class PayViewController: UIViewController {
                                                                 action: #selector(backButton))
         
         self.navigationItem.title = "Выберите способ оплаты"
+    }
+    
+    private func collectionViewSetup() {
+        DispatchQueue.main.async {
+            self.paymentNetworkService.getCurrencies { [weak self] result in
+                guard let self else { return }
+                switch result {
+                case .success:
+                    self.updateCollectionViewAnimated(for: cryptoCollectionView)
+                    self.paymentNetworkService.getOrder { [weak self] result in
+                        guard self != nil else { return }
+                        switch result {
+                        case .success:
+                            print("get order ok")
+                        case .failure:
+                            print("No get order")
+                        }
+                    }
+                    
+                case .failure:
+                    print("getCurrencies error")
+                }
+            }
+            
+
+        }
+    }
+    
+    private func updateCollectionViewAnimated(for collectionView: UICollectionView) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            let oldCount = 0
+            let newCount = storage.forCurrenciesCollection.count
+            if oldCount != newCount {
+                collectionView.performBatchUpdates {
+                    let indexPaths = (oldCount..<newCount).map { i in
+                        IndexPath(row: i, section: 0)
+                    }
+                    collectionView.insertItems(at: indexPaths)
+                } completion: { _ in }
+            }
+        }
     }
     
     private func addSubviews() {
@@ -157,13 +206,21 @@ final class PayViewController: UIViewController {
     
     @objc private func didPayButton() {
         let successfulPayScreen = SuccessfulPayScreen()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
+                
+        paymentNetworkService.setCurrencyBeforePay(currencyID: currencyID) { [weak self] result in
             guard let self else { return }
-            
-            if self.payStatus == true {
-                self.navigationController?.pushViewController(successfulPayScreen, animated: true)
-            } else {
+            switch result {
+            case .success:
+                self.paymentNetworkService.updateOrder { [weak self] result in
+                    guard let self else { return }
+                    switch result {
+                    case .success:
+                        self.navigationController?.pushViewController(successfulPayScreen, animated: true)
+                    case .failure:
+                        self.showAlert(vc: successfulPayScreen)
+                    }
+                }
+            case .failure:
                 self.showAlert(vc: successfulPayScreen)
             }
         }
@@ -173,15 +230,19 @@ final class PayViewController: UIViewController {
 // MARK: - UICollectionView Setup
 extension PayViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        8
+        storage.forCurrenciesCollection.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? CryptoCellView else { return CryptoCellView()}
         
-        cell.cellSetup(image: CryptoConstants.cryptoIcons[indexPath.row] ?? UIImage(),
-                       name: CryptoConstants.cryptoNames[indexPath.row],
-                       shortName: CryptoConstants.cryptoNamesShort[indexPath.row])
+//        cell.cellSetup(image: CryptoConstants.cryptoIcons[indexPath.row] ?? UIImage(),
+//                       name: CryptoConstants.cryptoNames[indexPath.row],
+//                       shortName: CryptoConstants.cryptoNamesShort[indexPath.row])
+        
+        cell.cellSetup(imageUrl: URL(string: storage.forCurrenciesCollection[indexPath.row].image) ?? URL(fileURLWithPath: "no url"),
+                       name: storage.forCurrenciesCollection[indexPath.row].title,
+                       shortName: storage.forCurrenciesCollection[indexPath.row].name)
         return cell
     }
     
@@ -217,6 +278,7 @@ extension PayViewController: UICollectionViewDataSource, UICollectionViewDelegat
         cell?.layer.borderWidth = 1
         cell?.layer.borderColor = UIColor.black.cgColor
         payButton.isEnabled = true
+        currencyID = storage.forCurrenciesCollection[indexPath.row].id
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
