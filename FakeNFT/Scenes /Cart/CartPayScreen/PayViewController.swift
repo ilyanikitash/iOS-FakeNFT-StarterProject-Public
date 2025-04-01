@@ -185,7 +185,7 @@ final class PayViewController: UIViewController {
         }))
         
         alert.addAction(UIAlertAction(title: "Повторить", style: .cancel, handler: { action in
-            self.navigationController?.pushViewController(vc, animated: true)
+            self.didPayButton()
             alert.dismiss(animated: false)
         }))
     }

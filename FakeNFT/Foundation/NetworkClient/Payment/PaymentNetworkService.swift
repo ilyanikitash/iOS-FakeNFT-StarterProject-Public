@@ -81,7 +81,7 @@ final class PaymentNetworkService {
         }
         self.task = task
         task.resume()
-  
+        
     }
     
     func setCurrencyBeforePay(currencyID: String, _ completion: @escaping (Result<SetCurrency, Error>) -> Void) {
@@ -111,7 +111,7 @@ final class PaymentNetworkService {
         }
         self.task = task
         task.resume()
-
+        
     }
     
     // MARK: - Order Update
@@ -122,8 +122,9 @@ final class PaymentNetworkService {
         
         var nfts: [String] = []
         
-        for i in storage.mockCartNfts { // брать из словаря данных для постоения таблицы корзины
+        for i in storage.mockCartNfts {// брать из словаря данных для постоения таблицы корзины
             nfts.append(i.id)
+            print("nfts: \(nfts)")
         }
         
         guard var request = makeRequest(string: HttpStrings.order.rawValue,
@@ -135,12 +136,14 @@ final class PaymentNetworkService {
         }
         
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-        request.setValue("application/json", forHTTPHeaderField: "Accept")
-//        let messageData = OrderUpdate(nfts: nfts)
-//        let data = try? JSONEncoder().encode(nfts)
-//        request.httpBody = try? JSONEncoder().encode(data)
-        let data = ["nfts": nfts]
-        request.httpBody = data.description.data(using: .utf8)
+        //        let messageData = OrderUpdate(nfts: nfts)
+        //        let data = try? JSONEncoder().encode(nfts)
+        //        request.httpBody = try? JSONEncoder().encode(data)
+        var requestComponents = URLComponents()
+        requestComponents.queryItems = [URLQueryItem(name: "nfts", value: arrayToStringConverter(nfts: nfts))]
+        
+        //        let data = "nfts:\(nfts)"
+        request.httpBody = requestComponents.query?.data(using: .utf8)
         
         let task = URLSession.shared.objectTask(for: request) { [weak self] (result: Result<Order, Error>) in
             guard let self else { return }
@@ -174,6 +177,14 @@ private func makeRequest(string: String, httpMethod: String) -> URLRequest? {
     request.setValue(RequestConstants.token, forHTTPHeaderField: "X-Practicum-Mobile-Token")
     print("URL Request: \(request)")
     return request
+}
+
+private func arrayToStringConverter(nfts: [String]) -> String {
+    var dateStringArray = [String]()
+    for i in nfts {
+        dateStringArray.append(i)
+    }
+    return dateStringArray.joined(separator: ",")
 }
 
 
