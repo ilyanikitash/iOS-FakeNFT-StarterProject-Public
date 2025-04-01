@@ -24,7 +24,6 @@ protocol ProfileService {
 final class ProfileServiceImpl: ProfileService {
 
     private let networkClient: NetworkClient
-
     init(networkClient: NetworkClient) {
         self.networkClient = networkClient
     }
@@ -44,7 +43,6 @@ final class ProfileServiceImpl: ProfileService {
         completion: @escaping ProfileCompletion
     ) {
         let dto = ProfileDtoObject(name: name, description: description, website: website, avatar: avatar)
-
         let request = ProfilePutRequest(dto: dto)
 
         networkClient.send(request: request, type: Profile.self) { result in
