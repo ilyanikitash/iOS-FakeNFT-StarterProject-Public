@@ -12,13 +12,17 @@ import Kingfisher
 
 final class MyNFTView: UIView {
 
-   private var nftItems: [MyNFT] = [] {
+    var nftItems: [MyNFT] = [] {
         didSet {
             updateUI()
+            nftTableView.reloadData()
         }
     }
 
-    private lazy var nftTableView: UITableView = {
+    var isLiked: ((String) -> Bool)?
+    var likeButtonTapped: ((String) -> Void)?
+
+      lazy var nftTableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
@@ -38,6 +42,14 @@ final class MyNFTView: UIView {
         label.isHidden = true
         return label
     }()
+    
+    private lazy var numberFormatter: NumberFormatter = {
+           let formatter = NumberFormatter()
+           formatter.numberStyle = .currency
+           formatter.currencySymbol = "ETH"
+           formatter.maximumFractionDigits = 2
+           return formatter
+       }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -89,7 +101,13 @@ extension MyNFTView: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: NFTCell.reuseIdentifier, for: indexPath) as! NFTCell
         let nft = nftItems[indexPath.row]
-        cell.configure(with: nft)
+        let formattedPrice = numberFormatter.string(from: nft.price as NSNumber) ?? "\(nft.price) ETH"
+              let liked = isLiked?(nft.id) ?? false
+              cell.configure(with: nft, isLiked: liked, formattedPrice: formattedPrice)
+              cell.selectionStyle = .none
+              cell.likeButtonTapped = { [weak self] in
+                  self?.likeButtonTapped?(nft.id)
+              }
     
         return cell
     }

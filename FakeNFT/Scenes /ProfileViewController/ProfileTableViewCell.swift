@@ -9,13 +9,14 @@ import UIKit
 
 final class ProfileView: UIView {
     
-    var websiteLabelTapped: ((String) -> Void)?
-    private var nftsCount: Int = 0
+    private let likesStorage = LikesStorageImpl.shared
+    private var nftsCount: Int = 3
     private var likesCount: Int = 0
-    
+    var websiteLabelTapped: ((String) -> Void)?
     var favoritesTapped: (() -> Void)?
     var aboutDeveloper: ((String) -> Void)?
     var myNFTTapped: (() -> Void)?
+  
     
    
     
@@ -163,6 +164,12 @@ final class ProfileView: UIView {
         profileTableView.reloadData()
         
     }
+    
+    func updateLikesCountAndUI() {
+        let likes = likesStorage.getAllLikes()
+        likesCount = likes.count
+        profileTableView.reloadData()
+        }
 }
 
 // MARK: - UITableViewDataSource
