@@ -1,17 +1,16 @@
 {
   "images" : [
     {
-      "filename" : "Stars.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Stars 1.png",
+      "filename" : "No Active.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Stars 2.png",
+      "filename" : "No Active 1.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

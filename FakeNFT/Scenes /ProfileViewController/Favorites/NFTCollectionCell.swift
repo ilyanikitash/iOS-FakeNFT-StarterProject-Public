@@ -129,7 +129,7 @@ final class NFTCollectionCell: UICollectionViewCell {
     private func updateRating(for rating: Int) {
         for (index, view) in ratingStackView.arrangedSubviews.enumerated() {
             guard let starImageView = view as? UIImageView else { continue }
-            starImageView.image = UIImage(named: index < rating ? "star_filled" : "star_empty")
+            starImageView.image = UIImage(named: index < rating ? "yellow_star" : "white_star")
         }
     }
     
