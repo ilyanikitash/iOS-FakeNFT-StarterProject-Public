@@ -43,9 +43,9 @@ final class NFTCollectionCell: UICollectionViewCell {
     private lazy var ratingStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
-        stackView.spacing = 4
+        stackView.spacing = 2
         for _ in 0..<5 {
-            let star = UIImageView(image: UIImage(named: "star_empty"))
+            let star = UIImageView(image: UIImage(named: "white_star"))
             star.contentMode = .scaleAspectFit
             stackView.addArrangedSubview(star)
         }
