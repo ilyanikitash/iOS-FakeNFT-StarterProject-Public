@@ -14,22 +14,22 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func sceneWillResignActive(_ scene: UIScene) {
-           sendLikesToServer()
-       }
-
-       func sceneDidEnterBackground(_ scene: UIScene) {
-           sendLikesToServer()
-       }
-
-       private func sendLikesToServer() {
-           let likes = LikesStorageImpl.shared.getAllLikes()
-           servicesAssembly.profileService.updateLikes(likes: likes) { result in
-               switch result {
-               case .success:
-                   print("Лайки успешно отправлены перед выходом из приложения.")
-               case .failure(let error):
-                   print("Ошибка отправки лайков: \(error.localizedDescription)")
-               }
-           }
-       }
+        sendLikesToServer()
+    }
+    
+    func sceneDidEnterBackground(_ scene: UIScene) {
+        sendLikesToServer()
+    }
+    
+    private func sendLikesToServer() {
+        let likes = LikesStorageImpl.shared.getAllLikes()
+        servicesAssembly.profileService.updateLikes(likes: likes) { result in
+            switch result {
+            case .success:
+                print("Лайки успешно отправлены перед выходом из приложения.")
+            case .failure(let error):
+                print("Ошибка отправки лайков: \(error.localizedDescription)")
+            }
+        }
+    }
 }
