@@ -57,6 +57,7 @@
 		ED74CF6E2D99334D005ACCAC /* PaymentStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED74CF6D2D99334D005ACCAC /* PaymentStructs.swift */; };
 		ED74CF712D99A4CB005ACCAC /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED74CF702D99A4CB005ACCAC /* Storage.swift */; };
 		ED74CF732D9C50CD005ACCAC /* UIBlockingProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED74CF722D9C50CD005ACCAC /* UIBlockingProgressHUD.swift */; };
+		ED74CF752D9DAFB9005ACCAC /* DeleteNftViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED74CF742D9DAFB9005ACCAC /* DeleteNftViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -131,6 +132,7 @@
 		ED74CF6D2D99334D005ACCAC /* PaymentStructs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentStructs.swift; sourceTree = "<group>"; };
 		ED74CF702D99A4CB005ACCAC /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		ED74CF722D9C50CD005ACCAC /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
+		ED74CF742D9DAFB9005ACCAC /* DeleteNftViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteNftViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -403,6 +405,7 @@
 			children = (
 				ED74CF372D8DE9CC005ACCAC /* CartMainViewController.swift */,
 				ED74CF382D8DE9CC005ACCAC /* NftCellView.swift */,
+				ED74CF742D9DAFB9005ACCAC /* DeleteNftViewController.swift */,
 			);
 			path = CartMainScreen;
 			sourceTree = "<group>";
@@ -581,6 +584,7 @@
 				0CF2C2DD2A783CE600FDC837 /* ErrorView.swift in Sources */,
 				ED74CF6C2D993193005ACCAC /* URLSession+data.swift.swift in Sources */,
 				ED74CF5E2D95CD6F005ACCAC /* SuccessfulPayScreen.swift in Sources */,
+				ED74CF752D9DAFB9005ACCAC /* DeleteNftViewController.swift in Sources */,
 				0C79EE682A76DE0900EE90EA /* NftDetailPresenter.swift in Sources */,
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
 				0CFCB7402A78002A0009A829 /* ExamplePutService.swift in Sources */,

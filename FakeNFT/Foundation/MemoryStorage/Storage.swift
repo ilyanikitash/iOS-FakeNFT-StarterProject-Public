@@ -13,8 +13,12 @@ final class Storage {
     
     private init() { }
     
-    // мок данные по nft для отладки, удалить после 3его эпика
-    let mockCartNfts = [MockNft(createdAt: "2023-10-08T07:43:22.944Z[GMT]",
+    var forCurrenciesCollection: [Currency] = []
+
+    var cellIndexToDelete = Int()
+    
+    // мок данные nft для отладки, удалить после 3его эпика
+    let data = [MockNft(createdAt: "2023-10-08T07:43:22.944Z[GMT]",
                             name: "Rosario Dejesus",
                             images: ["https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/Finn/1.png",
                             "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/Finn/2.png",
@@ -47,6 +51,5 @@ final class Storage {
                             autor: "https://goofy_napier.fakenfts.org/",
                             id:  "5093c01d-e79e-4281-96f1-76db5880ba70")]
     
-    
-    var forCurrenciesCollection: [Currency] = []
+    var mockCartNfts = [MockNft]()
 }

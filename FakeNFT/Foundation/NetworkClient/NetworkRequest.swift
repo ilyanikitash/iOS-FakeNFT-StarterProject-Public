@@ -12,6 +12,7 @@ enum HttpStrings: String {
     case currencies = "/api/v1/currencies"
     case currency = "/api/v1/currencies/1"
     case payment = "/api/v1/orders/1/payment/"
+    case nfts = "/api/v1/nft"
 }
 
 

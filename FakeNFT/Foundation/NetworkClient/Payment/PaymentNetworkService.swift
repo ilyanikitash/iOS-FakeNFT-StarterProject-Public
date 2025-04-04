@@ -22,6 +22,38 @@ final class PaymentNetworkService {
         case paymentNetworkServiceError
     }
     
+//    func getNfts(_ completion: @escaping (Result<[MockNft], Error>) -> Void) {
+//        if task != nil {
+//            task?.cancel()
+//        }
+//        
+//        guard let request = makeRequest(string: HttpStrings.nfts.rawValue,
+//                                        httpMethod: HttpMethod.get.rawValue),
+//              task == nil
+//        else {
+//            print("Order request error")
+//            return
+//        }
+//        
+//
+//        
+//        let task = URLSession.shared.objectTask(for: request) { [weak self] (result: Result<[MockNft], Error>) in
+//            guard let self else { return }
+//            self.task = nil
+//            switch result {
+//            case .success(let data):
+//                DispatchQueue.main.async {
+//                    self.orderId = data.id
+//                }
+//                
+//            case .failure(let error):
+//                print("responce error: \(error)")
+//            }
+//        }
+//        self.task = task
+//        task.resume()
+//    }
+    
     // MARK: - Order Fetch
     func getOrder(_ completion: @escaping (Result<Order, Error>) -> Void) {
         if task != nil {
@@ -122,7 +154,7 @@ final class PaymentNetworkService {
         
         var nfts: [String] = []
         
-        for i in storage.mockCartNfts {// брать из словаря данных для постоения таблицы корзины
+        for i in storage.mockCartNfts {     // брать из данных для построения таблицы корзины
             nfts.append(i.id)
             print("nfts: \(nfts)")
         }
@@ -136,13 +168,9 @@ final class PaymentNetworkService {
         }
         
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-        //        let messageData = OrderUpdate(nfts: nfts)
-        //        let data = try? JSONEncoder().encode(nfts)
-        //        request.httpBody = try? JSONEncoder().encode(data)
         var requestComponents = URLComponents()
         requestComponents.queryItems = [URLQueryItem(name: "nfts", value: arrayToStringConverter(nfts: nfts))]
         
-        //        let data = "nfts:\(nfts)"
         request.httpBody = requestComponents.query?.data(using: .utf8)
         
         let task = URLSession.shared.objectTask(for: request) { [weak self] (result: Result<Order, Error>) in
@@ -186,7 +214,6 @@ private func arrayToStringConverter(nfts: [String]) -> String {
     }
     return dateStringArray.joined(separator: ",")
 }
-
 
 //private func makePutRequest(string: String) -> URLRequest? {
 //    guard let url = URL(

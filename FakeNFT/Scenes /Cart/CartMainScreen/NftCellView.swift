@@ -9,19 +9,21 @@ import UIKit
 import Kingfisher
 
 final class NftCellView: UITableViewCell {
+    // MARK: Private Properties
+    private var nftIndex = Int()
+    
+    private let storage = Storage.shared
     
     // MARK: - UI Elements
     private lazy var image: UIImageView = {
         let image = UIImageView()
         image.layer.cornerRadius = 12
-//        image.layer.backgroundColor = UIColor.green.cgColor // toDo: подгружать с сервака
         image.clipsToBounds = true
         return image
     }()
     
     private lazy var nftNameLabel: UILabel = {
         let label = UILabel()
-//        label.text = "April" // toDo: подгружать с сервака
         label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         return label
     }()
@@ -59,13 +61,9 @@ final class NftCellView: UITableViewCell {
     }()
     
     private lazy var deleteButton: UIButton = {
-        let button = UIButton()
-//        
-//        let config = UIImage.SymbolConfiguration(pointSize: 16, weight: .medium, scale: .default)
-//        let image = UIImage(systemName: "nftDelete", withConfiguration: config)
-//        button.setImage(image?.withTintColor(UIColor(named: "blackForDarkMode") ?? UIColor(), renderingMode: .alwaysOriginal), for: .normal)
-        
+        let button = UIButton()        
         button.setImage(UIImage(named: "nftDelete"), for: .normal)
+            button.addTarget(self, action: #selector(switchToDeleteNftViewController), for: .touchUpInside)
         return button
     }()
 
@@ -80,11 +78,12 @@ final class NftCellView: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func cellSetup(nftImageUrl: URL, nftNameLabel: String, priceValueLabel: String) {
+    func cellSetup(nftImageUrl: URL, nftNameLabel: String, priceValueLabel: String, nftIndex: Int) {
         image.kf.indicatorType = .activity
         image.kf.setImage(with: nftImageUrl)
         self.nftNameLabel.text = nftNameLabel
         self.priceValueLabel.text = priceValueLabel
+        self.nftIndex = nftIndex
     }
 
     // MARK: - Private Methods
@@ -141,5 +140,10 @@ final class NftCellView: UITableViewCell {
             
         ])
     }
-
+    
+    @objc func switchToDeleteNftViewController() {
+        storage.cellIndexToDelete = nftIndex
+        print("index: \(nftIndex)")
+        NotificationCenter.default.post(name: Notification.Name("delete"), object: nil)
+    }
 }

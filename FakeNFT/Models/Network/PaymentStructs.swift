@@ -31,7 +31,7 @@ struct SetCurrency: Codable {
 //}
 
 // структура для отладки, удалить после 3его эпика
-struct MockNft {
+struct MockNft: Codable {
     let createdAt: String
     let name: String
     let images: [String]

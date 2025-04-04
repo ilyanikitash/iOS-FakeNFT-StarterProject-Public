@@ -78,6 +78,7 @@ final class PayViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.isHidden = false
+        updateCollectionViewAnimated(for: cryptoCollectionView)
     }
     
     // MARK: - Private Methods
@@ -179,7 +180,9 @@ final class PayViewController: UIViewController {
     private func showAlert(vc: UIViewController) {
         let alert = UIAlertController(title: "Не удалось произвести оплату", message: nil, preferredStyle: .alert)
         present(alert, animated: true)
-                
+        
+        
+                        
         alert.addAction(UIAlertAction(title: "Отмена", style: .default, handler: { action in
             alert.dismiss(animated: false)
         }))
@@ -215,6 +218,7 @@ final class PayViewController: UIViewController {
                     guard let self else { return }
                     switch result {
                     case .success:
+                        storage.forCurrenciesCollection.removeAll()
                         self.navigationController?.pushViewController(successfulPayScreen, animated: true)
                     case .failure:
                         self.showAlert(vc: successfulPayScreen)
@@ -235,11 +239,7 @@ extension PayViewController: UICollectionViewDataSource, UICollectionViewDelegat
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? CryptoCellView else { return CryptoCellView()}
-        
-//        cell.cellSetup(image: CryptoConstants.cryptoIcons[indexPath.row] ?? UIImage(),
-//                       name: CryptoConstants.cryptoNames[indexPath.row],
-//                       shortName: CryptoConstants.cryptoNamesShort[indexPath.row])
-        
+                
         cell.cellSetup(imageUrl: URL(string: storage.forCurrenciesCollection[indexPath.row].image) ?? URL(fileURLWithPath: "no url"),
                        name: storage.forCurrenciesCollection[indexPath.row].title,
                        shortName: storage.forCurrenciesCollection[indexPath.row].name)

@@ -11,8 +11,12 @@ final class CartMainViewController: UIViewController {
     // MARK: - Singletone
     private let storage = Storage.shared
     private let paymentNetworkService = PaymentNetworkService.shared
-    // MARK: - UI Elements
     
+    
+    // MARK: - Private Properties
+    private var cartMainViewControllerObserver: NSObjectProtocol?
+    
+    // MARK: - UI Elements
     private lazy var placeholderLabel: UILabel = {
         let placeholderLabel = UILabel()
         placeholderLabel.text = NSLocalizedString("Корзина пуста", comment: "")
@@ -43,14 +47,12 @@ final class CartMainViewController: UIViewController {
     
     private lazy var selectedNftCountLabel: UILabel = {
         let countLabel = UILabel()
-        countLabel.text = "3 NFT" // toDo: подгружать с сервака
         countLabel.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         return countLabel
     }()
     
     private lazy var priceNftLabel: UILabel = {
         let priceLabel = UILabel()
-        priceLabel.text = "5,43 ETH" // toDo: подгружать с сервака
         priceLabel.textColor = UIColor(red: 28/255, green: 159/255, blue: 0/255, alpha: 1)
         priceLabel.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         return priceLabel
@@ -63,14 +65,14 @@ final class CartMainViewController: UIViewController {
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         button.setTitleColor(UIColor(named: "whiteForDarkMode"), for: .normal)
         button.setTitle(NSLocalizedString("К оплате", comment: ""), for: .normal)
-        button.addTarget(self, action: #selector(switchToPayScreen), for: .touchUpInside) // toDo: следующий эпик
+        button.addTarget(self, action: #selector(switchToPayScreen), for: .touchUpInside)
         return button
     }()
-
+    
     // MARK: - View Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: sortImage, style: .plain, target: self, action: #selector(test))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: sortImage, style: .plain, target: self, action: nil)
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor(named: "blackForDarkMode")
         view.backgroundColor = UIColor(named: "whiteForDarkMode")
         addSubviews()
@@ -78,10 +80,7 @@ final class CartMainViewController: UIViewController {
         nftListTableView.dataSource = self
         nftListTableView.delegate = self
         nftListTableView.register(NftCellView.self, forCellReuseIdentifier: "cell")
-    }
-    
-    @objc func test() {
-        print("test")
+        storage.mockCartNfts = storage.data // удалить после 3его эпика
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -89,6 +88,26 @@ final class CartMainViewController: UIViewController {
         self.tabBarController?.tabBar.isHidden = false
         cartMainScreenSetup()
         labelsSetup()
+        
+        self.cartMainViewControllerObserver = NotificationCenter.default.addObserver(
+            forName: Notification.Name("delete"),
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            guard let self = self else { return }
+            self.switchDeleteNftViewController(index: 1)
+        }
+        
+        self.cartMainViewControllerObserver = NotificationCenter.default.addObserver(
+            forName: Notification.Name("tabBar"),
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            guard let self = self else { return }
+            self.updateTable()
+            self.cartMainScreenSetup()
+            self.tabBarController?.tabBar.isHidden = false
+        }
     }
     
     // MARK: - Private Methods
@@ -122,6 +141,10 @@ final class CartMainViewController: UIViewController {
         priceNftLabel.text = "\(NSString(format: "%.2f", sumPrice)) ETH"
     }
     
+    private func updateTable() {
+        nftListTableView.reloadData()
+    }
+    
     private func addSubviews() {
         [
             placeholderLabel,
@@ -129,7 +152,7 @@ final class CartMainViewController: UIViewController {
             payFieldView,
             selectedNftCountLabel,
             priceNftLabel,
-            payButton
+            payButton,
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
@@ -173,6 +196,19 @@ final class CartMainViewController: UIViewController {
         let payViewController = PayViewController()
         self.navigationController?.pushViewController(payViewController, animated: true)
     }
+    
+    func switchDeleteNftViewController(index: Int) {
+        let backView = view.snapshotView(afterScreenUpdates: false) ?? UIView()
+        let deleteNftViewController = DeleteNftViewController()
+        deleteNftViewController.modalPresentationStyle = .overCurrentContext
+        deleteNftViewController.modalTransitionStyle = .crossDissolve
+        deleteNftViewController.configureView(mainView: backView)
+        present(deleteNftViewController, animated: true)
+        
+        DispatchQueue.main.async {
+            self.tabBarController?.tabBar.isHidden = true
+        }
+    }
 }
 
 extension CartMainViewController: UITableViewDelegate, UITableViewDataSource {
@@ -184,12 +220,11 @@ extension CartMainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? NftCellView else { return NftCellView()}
-
+        
         cell.cellSetup(nftImageUrl: URL(string: storage.mockCartNfts[indexPath.section].images.first ?? "no url") ?? URL(fileURLWithPath: "no url"),
                        nftNameLabel: storage.mockCartNfts[indexPath.section].name,
-                       priceValueLabel: "\(storage.mockCartNfts[indexPath.section].price) ETH")
+                       priceValueLabel: "\(storage.mockCartNfts[indexPath.section].price) ETH", nftIndex: indexPath.section)
         
         return cell
     }
-
 }
