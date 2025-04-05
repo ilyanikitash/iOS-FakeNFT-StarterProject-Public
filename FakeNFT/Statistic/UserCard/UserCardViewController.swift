@@ -10,9 +10,14 @@ protocol LoadUserWebsiteDelegate: AnyObject {
     func loadWebsite(of userWebsite: String)
 }
 
+protocol GetNFTsCollectionDelegate: AnyObject {
+    func getNFTs(of user: UsersListModel)
+}
+
 final class UserCardViewController: UIViewController {
     // MARK: - Public Properties
     weak var loadUserWebsiteDelegate: LoadUserWebsiteDelegate?
+    weak var getNFTsCollectionDelegate: GetNFTsCollectionDelegate?
     // MARK: - Private Properties
     private let userCardView = UserCardView()
     private let statisticUsersListViewController: StatisticUsersListViewController
@@ -61,6 +66,8 @@ extension UserCardViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let nftCollectionVC = NFTCollectionViewController()
+        self.getNFTsCollectionDelegate = nftCollectionVC
+        getNFTsCollectionDelegate?.getNFTs(of: user)
         let nftCollectionNavController = UINavigationController(rootViewController: nftCollectionVC)
         nftCollectionNavController.setNavigationBarHidden(false, animated: false)
         nftCollectionNavController.modalPresentationStyle = .fullScreen
