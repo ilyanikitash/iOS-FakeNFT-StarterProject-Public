@@ -22,6 +22,7 @@ extension URLSession {
                     completion(.failure(error))
                 }
             case .failure(let error):
+                UIBlockingProgressHUD.dismiss()
                 print("objectTask failure")
                 completion(.failure(error))
             }
