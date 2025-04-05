@@ -12,11 +12,7 @@ final class DeleteNftViewController: UIViewController {
     // MARK: - Singletone
     private let storage = Storage.shared
     
-//    // MARK: Private Properties
-//    private var nftIndex = Int()
-    
     // MARK: - UI Elements
-    
     private lazy var mainView: UIView = {
         let mainView = UIView()
         mainView.frame = view.bounds
@@ -126,13 +122,9 @@ final class DeleteNftViewController: UIViewController {
     }
     
     @objc func didTapToDelete() {
-        
         var newMock = storage.mockCartNfts
         newMock.remove(at: storage.cellIndexToDelete)
         storage.mockCartNfts = newMock
-        print("new mock: \(newMock)")
-        print("storage: \(storage.mockCartNfts)")
-
         dismissVC()
     }
 

@@ -14,7 +14,6 @@ final class PayViewController: UIViewController {
     private let paymentNetworkService = PaymentNetworkService.shared
     
     // MARK: - Private Properties
-    private var payStatus: Bool = /*true*/ false //для контроля реализации кода успешной/неуспешной оплаты
     private var currencyID = String()
     
     private lazy var cryptoCollectionView: UICollectionView = {
@@ -64,7 +63,6 @@ final class PayViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionViewSetup()
-        print("\(storage.forCurrenciesCollection)")
         self.tabBarController?.tabBar.isHidden = true
         view.backgroundColor = UIColor(named: "whiteForDarkMode")
         navigationBarSetup()

@@ -15,7 +15,6 @@ extension URLSession {
             case .success(let data):
                 do {
                     let response = try decoder.decode(T.self, from: data)
-                    print("Success \(T.self) responce")
                     completion(.success(response))
                     UIBlockingProgressHUD.dismiss()
                 } catch {

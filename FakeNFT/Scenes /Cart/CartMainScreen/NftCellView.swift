@@ -55,7 +55,6 @@ final class NftCellView: UITableViewCell {
 
     private lazy var priceValueLabel: UILabel = {
         let label = UILabel()
-//        label.text = "13 ETH" // toDo: подгружать с сервака
         label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         return label
     }()
@@ -144,7 +143,6 @@ final class NftCellView: UITableViewCell {
     
     @objc func switchToDeleteNftViewController() {
         storage.cellIndexToDelete = nftIndex
-        print("index: \(nftIndex)")
         NotificationCenter.default.post(name: Notification.Name("delete"), object: nil)
     }
 }

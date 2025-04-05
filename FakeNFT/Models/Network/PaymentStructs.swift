@@ -25,11 +25,6 @@ struct SetCurrency: Codable {
     let id: String
 }
 
-//struct OrderUpdate: De {
-//    let nfts: [String]
-////    let id: String
-//}
-
 // структура для отладки, удалить после 3его эпика
 struct MockNft: Codable {
     let createdAt: String

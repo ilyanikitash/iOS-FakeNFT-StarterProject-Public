@@ -257,7 +257,7 @@ final class CartMainViewController: UIViewController {
 extension CartMainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { 1 }
     
-    func numberOfSections(in tableView: UITableView) -> Int { storage.mockCartNfts.count } // toDo: подгружать с сервака
+    func numberOfSections(in tableView: UITableView) -> Int { storage.mockCartNfts.count }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat { 140 }
     

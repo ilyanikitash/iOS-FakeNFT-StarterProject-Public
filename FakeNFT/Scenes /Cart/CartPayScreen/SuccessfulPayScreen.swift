@@ -79,8 +79,9 @@ final class SuccessfulPayScreen: UIViewController {
         ])
     }
     
+    // MARK: - Objc Methods
     @objc func backToCatalogAction() {
         print("test back to catalog button")
-        // toDo: реализация в следующем эпике
+        // toDo: реализация в следующем эпике, не мой экран
     }
 }

@@ -22,38 +22,6 @@ final class PaymentNetworkService {
         case paymentNetworkServiceError
     }
     
-//    func getNfts(_ completion: @escaping (Result<[MockNft], Error>) -> Void) {
-//        if task != nil {
-//            task?.cancel()
-//        }
-//        
-//        guard let request = makeRequest(string: HttpStrings.nfts.rawValue,
-//                                        httpMethod: HttpMethod.get.rawValue),
-//              task == nil
-//        else {
-//            print("Order request error")
-//            return
-//        }
-//        
-//
-//        
-//        let task = URLSession.shared.objectTask(for: request) { [weak self] (result: Result<[MockNft], Error>) in
-//            guard let self else { return }
-//            self.task = nil
-//            switch result {
-//            case .success(let data):
-//                DispatchQueue.main.async {
-//                    self.orderId = data.id
-//                }
-//                
-//            case .failure(let error):
-//                print("responce error: \(error)")
-//            }
-//        }
-//        self.task = task
-//        task.resume()
-//    }
-    
     // MARK: - Order Fetch
     func getOrder(_ completion: @escaping (Result<Order, Error>) -> Void) {
         if task != nil {
@@ -85,6 +53,7 @@ final class PaymentNetworkService {
         task.resume()
     }
     
+    // MARK: - Currencies Fetch
     func getCurrencies(_ completion: @escaping (Result<[Currency], Error>) -> Void) {
         if task != nil {
             task?.cancel()
@@ -116,6 +85,7 @@ final class PaymentNetworkService {
         
     }
     
+    // MARK: - Before Pay
     func setCurrencyBeforePay(currencyID: String, _ completion: @escaping (Result<SetCurrency, Error>) -> Void) {
         if task != nil {
             task?.cancel()
@@ -146,7 +116,7 @@ final class PaymentNetworkService {
         
     }
     
-    // MARK: - Order Update
+    // MARK: - Order Update/Pay
     func updateOrder(_ completion: @escaping (Result<Order, Error>) -> Void) {
         if task != nil {
             task?.cancel()
@@ -156,7 +126,6 @@ final class PaymentNetworkService {
         
         for i in storage.mockCartNfts {     // брать из данных для построения таблицы корзины
             nfts.append(i.id)
-            print("nfts: \(nfts)")
         }
         
         guard var request = makeRequest(string: HttpStrings.order.rawValue,
@@ -180,7 +149,6 @@ final class PaymentNetworkService {
             case .success(let responce):
                 DispatchQueue.main.async {
                     completion(.success(responce))
-                    print("PUT ok: \(responce)")
                 }
             case .failure(let error):
                 completion(.failure(error))
@@ -192,6 +160,7 @@ final class PaymentNetworkService {
     }
 }
 
+// MARK: - Private Methods
 private func makeRequest(string: String, httpMethod: String) -> URLRequest? {
     guard let url = URL(
         string: string,
@@ -203,7 +172,6 @@ private func makeRequest(string: String, httpMethod: String) -> URLRequest? {
     var request = URLRequest(url: url)
     request.httpMethod = httpMethod
     request.setValue(RequestConstants.token, forHTTPHeaderField: "X-Practicum-Mobile-Token")
-    print("URL Request: \(request)")
     return request
 }
 
@@ -214,20 +182,3 @@ private func arrayToStringConverter(nfts: [String]) -> String {
     }
     return dateStringArray.joined(separator: ",")
 }
-
-//private func makePutRequest(string: String) -> URLRequest? {
-//    guard let url = URL(
-//        string: string,
-//        relativeTo: URL(string: RequestConstants.baseURL)
-//    ) else {
-//        preconditionFailure("Unable to construct url")
-//    }
-//
-//    var request = URLRequest(url: url)
-//    request.setValue(RequestConstants.token, forHTTPHeaderField: "X-Practicum-Mobile-Token")
-//    request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-//
-//    request.httpMethod = HttpMethod.put.rawValue
-//    return request
-//}
-
