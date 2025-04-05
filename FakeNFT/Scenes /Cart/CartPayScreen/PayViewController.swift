@@ -262,7 +262,7 @@ extension PayViewController: UICollectionViewDataSource, UICollectionViewDelegat
         let cell = collectionView.cellForItem(at: indexPath) as? CryptoCellView
         cell?.layer.cornerRadius = 12
         cell?.layer.borderWidth = 1
-        cell?.layer.borderColor = UIColor.black.cgColor
+        cell?.layer.borderColor = UIColor(named: "blackForDarkMode")?.cgColor
         payButton.isEnabled = true
         currencyID = storage.forCurrenciesCollection[indexPath.row].id
     }
