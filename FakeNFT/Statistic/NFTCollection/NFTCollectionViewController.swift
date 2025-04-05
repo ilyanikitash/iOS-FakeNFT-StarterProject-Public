@@ -57,7 +57,6 @@ final class NFTCollectionViewController: UIViewController {
         setupNavigationBar()
         setupCollectionView()
         setupObserver()
-        showActivityIndicator()
     }
     // MARK: - Selectors
     @objc private func goBack() {
@@ -106,6 +105,12 @@ final class NFTCollectionViewController: UIViewController {
         nftCollectionView.collectionView.isHidden = false
         nftCollectionView.activityIndicator.isHidden = true
     }
+    private func setupEmptyCollection() {
+        nftCollectionView.activityIndicator.stopAnimating()
+        nftCollectionView.collectionView.isHidden = true
+        nftCollectionView.activityIndicator.isHidden = true
+        nftCollectionView.emptyCollectionTitle.isHidden = false
+    }
 }
 
 extension NFTCollectionViewController: UICollectionViewDelegateFlowLayout {
@@ -137,7 +142,13 @@ extension NFTCollectionViewController: UICollectionViewDataSource {
 
 extension NFTCollectionViewController: GetNFTsCollectionDelegate {
     func getNFTs(of user: UsersListModel) {
-        guard !user.nfts.isEmpty else { return }
+        print(!user.nfts.isEmpty)
+        guard !user.nfts.isEmpty else {
+            print("yes")
+            setupEmptyCollection()
+            return
+        }
+        showActivityIndicator()
         nftCollectionService.fetchNFT(with: user.nfts)
     }
 }
