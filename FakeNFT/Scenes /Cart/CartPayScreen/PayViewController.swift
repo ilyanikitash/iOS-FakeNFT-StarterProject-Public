@@ -118,17 +118,7 @@ final class PayViewController: UIViewController {
     
     private func updateCollectionViewAnimated(for collectionView: UICollectionView) {
         DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
-            let oldCount = 0
-            let newCount = storage.forCurrenciesCollection.count
-            if oldCount != newCount {
-                collectionView.performBatchUpdates {
-                    let indexPaths = (oldCount..<newCount).map { i in
-                        IndexPath(row: i, section: 0)
-                    }
-                    collectionView.insertItems(at: indexPaths)
-                } completion: { _ in }
-            }
+            self?.cryptoCollectionView.reloadData()
         }
     }
     
