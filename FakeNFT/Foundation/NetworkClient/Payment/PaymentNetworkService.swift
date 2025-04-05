@@ -38,7 +38,6 @@ final class PaymentNetworkService {
         
         let task = URLSession.shared.objectTask(for: request) { [weak self] (result: Result<Order, Error>) in
             guard let self else { return }
-            self.task = nil
             switch result {
             case .success(let data):
                 DispatchQueue.main.async {
