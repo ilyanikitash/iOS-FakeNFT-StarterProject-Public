@@ -12,7 +12,6 @@ final class CartMainViewController: UIViewController {
     private let storage = Storage.shared
     private let paymentNetworkService = PaymentNetworkService.shared
     
-    
     // MARK: - Private Properties
     private var cartMainViewControllerObserver: NSObjectProtocol?
     
@@ -72,9 +71,8 @@ final class CartMainViewController: UIViewController {
     // MARK: - View Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: sortImage, style: .plain, target: self, action: nil)
-        self.navigationItem.rightBarButtonItem?.tintColor = UIColor(named: "blackForDarkMode")
         view.backgroundColor = UIColor(named: "whiteForDarkMode")
+        navControllerSetup()
         addSubviews()
         makeConstraints()
         nftListTableView.dataSource = self
@@ -111,6 +109,11 @@ final class CartMainViewController: UIViewController {
     }
     
     // MARK: - Private Methods
+    private func navControllerSetup() {
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: sortImage, style: .plain, target: self, action: #selector(cartSortALert))
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor(named: "blackForDarkMode")
+    }
+    
     private func cartMainScreenSetup() {
         if storage.mockCartNfts.isEmpty {
             nftListTableView.isHidden = true
@@ -139,6 +142,10 @@ final class CartMainViewController: UIViewController {
             sumPrice += i.price
         }
         priceNftLabel.text = "\(NSString(format: "%.2f", sumPrice)) ETH"
+    }
+    
+    private func ratingSetup(ratingInt: Int) -> String {
+        return String(repeating: "★", count: ratingInt)
     }
     
     private func updateTable() {
@@ -197,6 +204,42 @@ final class CartMainViewController: UIViewController {
         self.navigationController?.pushViewController(payViewController, animated: true)
     }
     
+    @objc private func cartSortALert() {
+        let alert = UIAlertController(title: "Сортировка", message: nil, preferredStyle: .actionSheet)
+        present(alert, animated: true)
+        
+        alert.addAction(UIAlertAction(title: "По цене", style: .default, handler: { action in
+            self.storage.mockCartNfts.sort(by: {$0.price > $1.price})
+            DispatchQueue.main.async {
+                self.updateTable()
+            }
+            alert.dismiss(animated: false)
+        }))
+                 
+        alert.addAction(UIAlertAction(title: "По рейтингу", style: .default, handler: { action in
+            self.storage.mockCartNfts.sort(by: {$0.rating > $1.rating})
+            DispatchQueue.main.async {
+                self.updateTable()
+            }
+
+            alert.dismiss(animated: false)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "По названию", style: .default, handler: { action in
+            self.storage.mockCartNfts.sort(by: {$0.name > $1.name})
+            DispatchQueue.main.async {
+                self.updateTable()
+            }
+
+            alert.dismiss(animated: false)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Закрыть", style: .cancel, handler: { action in
+            alert.dismiss(animated: false)
+        }))
+
+    }
+    
     func switchDeleteNftViewController(index: Int) {
         let backView = view.snapshotView(afterScreenUpdates: false) ?? UIView()
         let deleteNftViewController = DeleteNftViewController()
@@ -223,7 +266,8 @@ extension CartMainViewController: UITableViewDelegate, UITableViewDataSource {
         
         cell.cellSetup(nftImageUrl: URL(string: storage.mockCartNfts[indexPath.section].images.first ?? "no url") ?? URL(fileURLWithPath: "no url"),
                        nftNameLabel: storage.mockCartNfts[indexPath.section].name,
-                       priceValueLabel: "\(storage.mockCartNfts[indexPath.section].price) ETH", nftIndex: indexPath.section)
+                       priceValueLabel: "\(storage.mockCartNfts[indexPath.section].price) ETH", nftIndex: indexPath.section,
+                       rating: ratingSetup(ratingInt: storage.mockCartNfts[indexPath.section].rating))
         
         return cell
     }

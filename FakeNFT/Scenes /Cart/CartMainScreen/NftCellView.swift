@@ -41,7 +41,7 @@ final class NftCellView: UITableViewCell {
         let rating = UILabel()
         rating.font = UIFont.systemFont(ofSize: 12, weight: .regular)
         rating.textAlignment = .left
-        rating.text = "★★★" // toDo: подгружать с сервака
+        rating.text = "★★★"
         rating.textColor = UIColor(red: 254/255, green: 239/255, blue: 13/255, alpha: 1)
         return rating
     }()
@@ -78,12 +78,13 @@ final class NftCellView: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func cellSetup(nftImageUrl: URL, nftNameLabel: String, priceValueLabel: String, nftIndex: Int) {
+    func cellSetup(nftImageUrl: URL, nftNameLabel: String, priceValueLabel: String, nftIndex: Int, rating: String) {
         image.kf.indicatorType = .activity
         image.kf.setImage(with: nftImageUrl)
         self.nftNameLabel.text = nftNameLabel
         self.priceValueLabel.text = priceValueLabel
         self.nftIndex = nftIndex
+        self.rating.text = rating
     }
 
     // MARK: - Private Methods

@@ -12,6 +12,8 @@ final class CryptoCellView: UICollectionViewCell {
     // MARK: - Private Properties
     private lazy var cryptoIcon: UIImageView = {
         let cryptoIcon = UIImageView()
+        cryptoIcon.layer.cornerRadius = 6
+        cryptoIcon.layer.backgroundColor = UIColor.black.cgColor
         return cryptoIcon
     }()
 

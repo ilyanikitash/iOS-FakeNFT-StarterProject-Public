@@ -180,9 +180,7 @@ final class PayViewController: UIViewController {
     private func showAlert(vc: UIViewController) {
         let alert = UIAlertController(title: "Не удалось произвести оплату", message: nil, preferredStyle: .alert)
         present(alert, animated: true)
-        
-        
-                        
+
         alert.addAction(UIAlertAction(title: "Отмена", style: .default, handler: { action in
             alert.dismiss(animated: false)
         }))
