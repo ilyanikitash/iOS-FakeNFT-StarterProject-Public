@@ -27,7 +27,8 @@ final class TabBarController: UITabBarController {
         
         catalogController.tabBarItem = catalogTabBarItem
         statisticUsersListVCNavController.tabBarItem = statisticTabBarItem
-        viewControllers = [catalogController, statisticUsersListVCNavController]
+        viewControllers = [catalogController]
+        viewControllers?.append(statisticUsersListVCNavController)
 
         view.backgroundColor = .systemBackground
     }
