@@ -17,31 +17,6 @@ final class NFTCollectionService {
     // MARK: - Initializers
     private init() {}
     // MARK: - Public Methods
-//    func fetchNFT(with id: [String]) {
-//        assert(Thread.isMainThread)
-//        guard task == nil else { return }
-//        
-//        
-//        guard let request = try? makeNFTRequest(with: id) else { return }
-//        task?.cancel()
-//        
-//        let task = urlSession.objectTask(for: request) { [weak self] (result: Result<NFTCollectionResult, Error>) in
-//            guard let self else { return }
-//            switch result {
-//            case .success(let response):
-//                let newNFT = NFTCollectionModel(result: response)
-//                DispatchQueue.main.async {
-//                    self.nfts.append(newNFT)
-//                    NotificationCenter.default.post(name: NFTCollectionService.didChangeNotification, object: nil)
-//                }
-//            case .failure(let error):
-//                print("[\(String(describing: self)).\(#function)]: \(NFTCollectionServiceErrors.invalidFetchingNFTsList) -  Error fetching NFT, \(error.localizedDescription)")
-//            }
-//            self.task = nil
-//        }
-//        self.task = task
-//        task.resume()
-//    }
     func fetchNFT(with ids: [String]) {
         assert(Thread.isMainThread)
         

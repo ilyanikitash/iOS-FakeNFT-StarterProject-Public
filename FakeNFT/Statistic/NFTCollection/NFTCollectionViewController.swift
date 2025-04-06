@@ -10,40 +10,6 @@ final class NFTCollectionViewController: UIViewController {
     // MARK: - Private properties
     private let nftCollectionView = NFTCollectionView()
     private var nfts: [NFTCollectionModel] = []
-    private var mockNfts: [NFTCollectionModel] = [
-        NFTCollectionModel(createdAt: "",
-                           name: "Jnsddjnj",
-                           images: [],
-                           rating: 3,
-                           description: "dskmdskm",
-                           price: 9443.4,
-                           author: "dsfds SDfds",
-                           id: "dssd"),
-        NFTCollectionModel(createdAt: "",
-                           name: "fdjnvjn",
-                           images: [],
-                           rating: 4,
-                           description: "dfjnvdjcmsdmcmsdkmc",
-                           price: 434.4,
-                           author: "JDNS jdndsj",
-                           id: "dsd"),
-        NFTCollectionModel(createdAt: "sdfdsfds",
-                           name: "dsfsdfdsfsd",
-                           images: [],
-                           rating: 1,
-                           description: "dsfsdfdsvsdv dsf dsfdsfdsf",
-                           price: 54.4,
-                           author: "dsfdsfdsf SDE",
-                           id: "efwdf"),
-        NFTCollectionModel(createdAt: "KDSMFk",
-                           name: "dSJIDNFJDSNF",
-                           images: [],
-                           rating: 4,
-                           description: "swewe233ewfwfdsvsd fdvds",
-                           price: 34.2,
-                           author: "SDMdsm dsm f",
-                           id: "sdsd")
-    ]
     private let nftCollectionService = NFTCollectionService.shared
     private var nftCollectionServiceObserver: NSObjectProtocol?
     // MARK: - Lifecycle
@@ -88,7 +54,6 @@ final class NFTCollectionViewController: UIViewController {
                          queue: .main
             ) { [weak self] _ in
                 guard let self else { return print("error") }
-                print("yes")
                 nfts = nftCollectionService.nfts
                 nftCollectionView.collectionView.reloadData()
                 hideActivityIndicator()
@@ -115,12 +80,29 @@ final class NFTCollectionViewController: UIViewController {
 
 extension NFTCollectionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-            return CGSize(width: 108, height: 192)
+        let spacing: CGFloat = 9
+        let sideInset: CGFloat = 16
+        let itemsPerRow: CGFloat = 3
+        
+        let totalCellWidth = collectionView.bounds.width - 2 * sideInset
+        let totalSpacingWidth = spacing * CGFloat(itemsPerRow - 1)
+        
+        let itemWidth = (totalCellWidth - totalSpacingWidth) / itemsPerRow
+                
+        return CGSize(width: itemWidth, height: itemWidth * 1.78)
     }
     func collectionView(_ collectionView: UICollectionView,
-                            layout collectionViewLayout: UICollectionViewLayout,
-                            insetForSectionAt section: Int) -> UIEdgeInsets {
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+    }
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 8
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 9
     }
 }
 
@@ -133,7 +115,6 @@ extension NFTCollectionViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NFTCollectionViewCell.reuseIdentifier, for: indexPath) as? NFTCollectionViewCell else {
             return UICollectionViewCell()
         }
-        print("NFTs \(nfts)")
         let nft = nfts[indexPath.row]
         cell.configure(with: nft)
         return cell
@@ -142,9 +123,7 @@ extension NFTCollectionViewController: UICollectionViewDataSource {
 
 extension NFTCollectionViewController: GetNFTsCollectionDelegate {
     func getNFTs(of user: UsersListModel) {
-        print(!user.nfts.isEmpty)
         guard !user.nfts.isEmpty else {
-            print("yes")
             setupEmptyCollection()
             return
         }

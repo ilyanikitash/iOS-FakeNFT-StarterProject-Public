@@ -55,6 +55,9 @@ final class NFTCollectionViewCell: UICollectionViewCell {
     }()
     // MARK: - Public Properties
     static let reuseIdentifier = "NFTCollectionViewCell"
+    // MARK: - Private Properties
+    private var isLiked = false
+    private var isAddToCart = false
     // MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -73,10 +76,12 @@ final class NFTCollectionViewCell: UICollectionViewCell {
     }
     //MARK: - Selectors
     @objc private func tapLikeButton() {
-        //TODO: обработка нажатия на лайк
+        isLiked = !isLiked
+        likeButton.setImage(UIImage(named: isLiked ? "active_like" : "no_active_like"), for: .normal)
     }
     @objc private func tapCartButton() {
-        //TODO: обработка нажатия на корзину
+        isAddToCart = !isAddToCart
+        cartButton.setImage(UIImage(named: isAddToCart ? "add_cart" : "cart"), for: .normal)
     }
     // MARK: - Public methods
     func configure(with nft: NFTCollectionModel) {
@@ -117,8 +122,7 @@ final class NFTCollectionViewCell: UICollectionViewCell {
             nftImage.topAnchor.constraint(equalTo: contentView.topAnchor),
             nftImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             nftImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            nftImage.heightAnchor.constraint(equalToConstant: 108),
-            nftImage.widthAnchor.constraint(equalToConstant: 108),
+            nftImage.heightAnchor.constraint(equalTo: nftImage.widthAnchor),
             
             likeButton.topAnchor.constraint(equalTo: nftImage.topAnchor),
             likeButton.trailingAnchor.constraint(equalTo: nftImage.trailingAnchor),
