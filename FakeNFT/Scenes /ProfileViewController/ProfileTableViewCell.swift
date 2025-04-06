@@ -9,13 +9,16 @@ import UIKit
 
 final class ProfileView: UIView {
     
-    var websiteLabelTapped: ((String) -> Void)?
-    private var nftsCount: Int = 0
+    private let likesStorage = LikesStorageImpl.shared
+    private var nftsCount: Int = 3
     private var likesCount: Int = 0
-    
+    var websiteLabelTapped: ((String) -> Void)?
     var favoritesTapped: (() -> Void)?
     var aboutDeveloper: ((String) -> Void)?
     var myNFTTapped: (() -> Void)?
+  
+    
+   
     
     // MARK: - UI Elements
     
@@ -161,6 +164,12 @@ final class ProfileView: UIView {
         profileTableView.reloadData()
         
     }
+    
+    func updateLikesCountAndUI() {
+        let likes = likesStorage.getAllLikes()
+        likesCount = likes.count
+        profileTableView.reloadData()
+        }
 }
 
 // MARK: - UITableViewDataSource
@@ -197,22 +206,21 @@ extension ProfileView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
         switch indexPath.row {
         case 0:
-            if let myNFTTapped = myNFTTapped {
-                myNFTTapped()
-            }
-        case 1:
-            if let favoritesTapped = favoritesTapped {
-                favoritesTapped()
-            }           case 2:
-            if let aboutDeveloper = aboutDeveloper {
-                aboutDeveloper("practicum.yandex.ru")
-            }
-        default:
-            break
-        }
+                    if let myNFTTapped = myNFTTapped {
+                        myNFTTapped()
+                    }
+                case 1:
+                    if let favoritesTapped = favoritesTapped {
+                        favoritesTapped()
+                    }           case 2:
+                    if let aboutDeveloper = aboutDeveloper {
+                        aboutDeveloper("practicum.yandex.ru")
+                    }
+                default:
+                    break
+                }
     }
 }
 

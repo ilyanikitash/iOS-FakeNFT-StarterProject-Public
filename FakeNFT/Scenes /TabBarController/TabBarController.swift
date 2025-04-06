@@ -1,10 +1,10 @@
 import UIKit
 
 final class TabBarController: UITabBarController {
-    
     let servicesAssembly = ServicesAssembly(
            networkClient: DefaultNetworkClient(),
-           nftStorage: NftStorageImpl()
+           nftStorage: NftStorageImpl(),
+           myNftStorage: MyNftStorageImpl()
        )
     
     private let catalogTabBarItem = UITabBarItem(
@@ -31,7 +31,7 @@ final class TabBarController: UITabBarController {
         )
         catalogController.tabBarItem = catalogTabBarItem
 
-        viewControllers = [catalogController,profileViewController]
+        viewControllers = [catalogController,profileNavController]
 
         view.backgroundColor = .systemBackground
     }

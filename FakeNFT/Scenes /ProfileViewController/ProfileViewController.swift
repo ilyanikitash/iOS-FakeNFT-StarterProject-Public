@@ -11,12 +11,22 @@ import WebKit
 import Kingfisher
 import ProgressHUD
 
+enum NFTScreenType {
+    case nftScreen
+    case favoritesScreen
+}
 
 final class ProfileViewController: UIViewController {
     
     private let servicesAssembly: ServicesAssembly
     private let profileView = ProfileView()
     private var profile: Profile?
+    private var myNFTs: [String]?
+    private let myNFTViewController = MyNFTViewController()
+    private var blockingView: UIView?
+    private var likes: [String]?
+    private let likesStorage = LikesStorageImpl.shared
+    
     
     // MARK: - UI Elements
     
@@ -54,10 +64,29 @@ final class ProfileViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        likes = likesStorage.getAllLikes()
         view = profileView
         setupEditButton()
         loadProfile()
         
+        profileView.myNFTTapped = { [weak self] in
+                    guard let self = self else { return }
+            if let nftIds = self.myNFTs, !nftIds.isEmpty {
+                          self.loadNFTs(with: nftIds, for: .nftScreen)
+                      } else {
+                          self.showNFTScreen(with: [])
+            }
+        }
+        
+        profileView.favoritesTapped = { [weak self] in
+                  guard let self = self else { return }
+                  if let nftIds = self.likes, !nftIds.isEmpty {
+                      self.loadNFTs(with: nftIds, for: .favoritesScreen)
+                  } else {
+                      self.showFavoritesScreen(with: [])
+                  }
+              }
+
         profileView.websiteLabelTapped = { [weak self] address in
             self?.didTapOnWebsiteLabel(with: address)
         }
@@ -84,14 +113,17 @@ final class ProfileViewController: UIViewController {
     private func loadProfile() {
         ProgressHUD.show()
         servicesAssembly.profileService.loadProfile { [weak self] result in
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
                 ProgressHUD.dismiss()
                 switch result {
                 case .success(let loadedProfile):
-                    self?.profile = loadedProfile
-                    self?.profileView.updateUI(with: loadedProfile)
+                    self.profile = loadedProfile
+                    self.profileView.updateUI(with: loadedProfile)
+                    self.myNFTs = loadedProfile.nfts
+                    likesStorage.syncLikes(with: loadedProfile.likes)
                 case .failure(let error):
-                    self?.showErrorAlert(with: error)
+                    self.showErrorAlert(with: error)
                 }
             }
         }
@@ -122,6 +154,99 @@ final class ProfileViewController: UIViewController {
         
         present(alert, animated: true, completion: nil)
     }
+    
+    private func loadNFTs(with ids: [String], for screenType: NFTScreenType) {
+          var loadedNFTs: [MyNFT] = []
+          let dispatchGroup = DispatchGroup()
+
+          ProgressHUD.show()
+          disableUserInteraction()
+
+          for id in ids {
+              dispatchGroup.enter()
+
+              servicesAssembly.myNftService.loadNft(id: id) { [weak self] result in
+                  switch result {
+                  case .success(let nft):
+                      loadedNFTs.append(nft)
+                  case .failure(let error):
+                      self?.showErrorAlert(with: error)
+                  }
+                  dispatchGroup.leave()
+              }
+          }
+
+        dispatchGroup.notify(queue: .main) { [weak self] in
+                   guard let self = self else { return }
+              self.enableUserInteraction()
+              ProgressHUD.dismiss()
+            switch screenType {
+                       case .nftScreen:
+                           self.showNFTScreen(with: loadedNFTs)
+                       case .favoritesScreen:
+                           self.showFavoritesScreen(with: loadedNFTs)
+                       }
+          }
+      }
+
+      private func showNFTScreen(with nfts: [MyNFT]) {
+          guard let navigationController = self.navigationController else { return }
+          let myNFTViewController = MyNFTViewController()
+          myNFTViewController.nfts = nfts
+          myNFTViewController.hidesBottomBarWhenPushed = true
+          myNFTViewController.saveLikes = { [weak self] in
+                     guard let self = self else { return }
+
+                     let likes = likesStorage.getAllLikes()
+
+                     self.updateLikesOnServer(likes: likes) { result in
+                         switch result {
+                         case .success:
+                             self.profileView.updateLikesCountAndUI()
+                         case .failure(let error):
+                             print("Ошибка при отправке лайков на сервер: \(error)")
+                         }
+                     }
+                 }
+          navigationController.pushViewController(myNFTViewController, animated: true)
+      }
+      
+    private func showFavoritesScreen(with nfts: [MyNFT]) {
+          guard let navigationController = self.navigationController else { return }
+          let favoritesNftViewController = FavoritesNftViewController()
+
+          favoritesNftViewController.favoriteNfts = nfts
+          favoritesNftViewController.hidesBottomBarWhenPushed = true
+
+          favoritesNftViewController.saveLikes = { [weak self] in
+              guard let self = self else { return }
+
+              self.likes = self.likesStorage.getAllLikes()
+              self.updateLikesOnServer(likes: self.likes ?? []) { result in
+                  switch result {
+                  case .success:
+                      self.profileView.updateLikesCountAndUI()
+                  case .failure(let error):
+                      print("Ошибка при отправке лайков на сервер: \(error)")
+                  }
+              }
+          }
+
+          navigationController.pushViewController(favoritesNftViewController, animated: true)
+      }
+
+      private func updateLikesOnServer(likes: [String], completion: @escaping (Result<Void, Error>) -> Void) {
+          let likes = likesStorage.getAllLikes()
+          servicesAssembly.profileService.updateLikes(likes: likes) { [weak self] result in
+              switch result {
+              case .success:
+                  self?.likes = likes
+                  completion(.success(()))
+              case .failure(let error):
+                  completion(.failure(error))
+              }
+          }
+      }
     
     // MARK: - Actions
     
@@ -160,11 +285,27 @@ final class ProfileViewController: UIViewController {
             webView.leadingAnchor.constraint(equalTo: webViewController.view.leadingAnchor),
             webView.trailingAnchor.constraint(equalTo: webViewController.view.trailingAnchor)
         ])
-        
-        webViewController.modalPresentationStyle = .pageSheet
-        present(webViewController, animated: true, completion: nil)
-        
+        webViewController.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(webViewController, animated: true)
     }
+    
+    private func disableUserInteraction() {
+           if blockingView == nil {
+               let view = UIView(frame: UIScreen.main.bounds)
+               view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+               view.isUserInteractionEnabled = true
+               blockingView = view
+           }
+
+           if let blockingView = blockingView {
+               UIApplication.shared.windows.first?.addSubview(blockingView)
+           }
+       }
+
+       private func enableUserInteraction() {
+           blockingView?.removeFromSuperview()
+           blockingView = nil
+       }
 }
 
 // MARK: - EditProfileDelegate
