@@ -76,7 +76,6 @@ final class PayViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.isHidden = false
-        updateCollectionViewAnimated(for: cryptoCollectionView)
     }
     
     // MARK: - Private Methods
@@ -106,19 +105,22 @@ final class PayViewController: UIViewController {
                             print("No get order")
                         }
                     }
-                    
                 case .failure:
                     print("getCurrencies error")
                 }
             }
-            
-
         }
     }
     
     private func updateCollectionViewAnimated(for collectionView: UICollectionView) {
         DispatchQueue.main.async { [weak self] in
-            self?.cryptoCollectionView.reloadData()
+            guard let self else { return }
+            collectionView.performBatchUpdates {
+                let indexPaths = (0..<self.storage.forCurrenciesCollection.count).map { i in
+                    IndexPath(row: i, section: 0)
+                }
+                collectionView.insertItems(at: indexPaths)
+            } completion: { _ in }
         }
     }
     
@@ -168,7 +170,7 @@ final class PayViewController: UIViewController {
     private func showAlert(vc: UIViewController) {
         let alert = UIAlertController(title: "Не удалось произвести оплату", message: nil, preferredStyle: .alert)
         present(alert, animated: true)
-
+        
         alert.addAction(UIAlertAction(title: "Отмена", style: .default, handler: { action in
             alert.dismiss(animated: false)
         }))
@@ -187,7 +189,7 @@ final class PayViewController: UIViewController {
         if let url = URL(string: "https://yandex.ru/legal/practicum_termsofuse/") {
             let config = SFSafariViewController.Configuration()
             config.entersReaderIfAvailable = true
-
+            
             let vc = SFSafariViewController(url: url, configuration: config)
             present(vc, animated: true)
         }
@@ -195,7 +197,7 @@ final class PayViewController: UIViewController {
     
     @objc private func didPayButton() {
         let successfulPayScreen = SuccessfulPayScreen()
-                
+        
         paymentNetworkService.setCurrencyBeforePay(currencyID: currencyID) { [weak self] result in
             guard let self else { return }
             switch result {
@@ -225,7 +227,7 @@ extension PayViewController: UICollectionViewDataSource, UICollectionViewDelegat
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? CryptoCellView else { return CryptoCellView()}
-                
+        
         cell.cellSetup(imageUrl: URL(string: storage.forCurrenciesCollection[indexPath.row].image) ?? URL(fileURLWithPath: "no url"),
                        name: storage.forCurrenciesCollection[indexPath.row].title,
                        shortName: storage.forCurrenciesCollection[indexPath.row].name)

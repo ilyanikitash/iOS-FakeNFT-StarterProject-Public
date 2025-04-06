@@ -93,7 +93,7 @@ final class CartMainViewController: UIViewController {
             queue: .main
         ) { [weak self] _ in
             guard let self = self else { return }
-            self.switchDeleteNftViewController(index: 1)
+            self.switchDeleteNftViewController()
         }
         
         self.cartMainViewControllerObserver = NotificationCenter.default.addObserver(
@@ -149,7 +149,11 @@ final class CartMainViewController: UIViewController {
     }
     
     private func updateTable() {
-        nftListTableView.reloadData()
+        DispatchQueue.main.async { [weak self] in
+            self?.nftListTableView.performBatchUpdates {
+                self?.nftListTableView.deleteRows(at: [IndexPath(row: self?.storage.cellIndexToDelete ?? 0, section: 0)], with: .middle)
+            } completion: { _ in }
+        }
     }
     
     private func addSubviews() {
@@ -215,13 +219,12 @@ final class CartMainViewController: UIViewController {
             }
             alert.dismiss(animated: false)
         }))
-                 
+        
         alert.addAction(UIAlertAction(title: "По рейтингу", style: .default, handler: { action in
             self.storage.mockCartNfts.sort(by: {$0.rating > $1.rating})
             DispatchQueue.main.async {
                 self.updateTable()
             }
-
             alert.dismiss(animated: false)
         }))
         
@@ -230,17 +233,16 @@ final class CartMainViewController: UIViewController {
             DispatchQueue.main.async {
                 self.updateTable()
             }
-
             alert.dismiss(animated: false)
         }))
         
         alert.addAction(UIAlertAction(title: "Закрыть", style: .cancel, handler: { action in
             alert.dismiss(animated: false)
         }))
-
+        
     }
     
-    func switchDeleteNftViewController(index: Int) {
+    func switchDeleteNftViewController() {
         let backView = view.snapshotView(afterScreenUpdates: false) ?? UIView()
         let deleteNftViewController = DeleteNftViewController()
         deleteNftViewController.modalPresentationStyle = .overCurrentContext
@@ -255,19 +257,17 @@ final class CartMainViewController: UIViewController {
 }
 
 extension CartMainViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { 1 }
-    
-    func numberOfSections(in tableView: UITableView) -> Int { storage.mockCartNfts.count }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { storage.mockCartNfts.count }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat { 140 }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? NftCellView else { return NftCellView()}
         
-        cell.cellSetup(nftImageUrl: URL(string: storage.mockCartNfts[indexPath.section].images.first ?? "no url") ?? URL(fileURLWithPath: "no url"),
-                       nftNameLabel: storage.mockCartNfts[indexPath.section].name,
-                       priceValueLabel: "\(storage.mockCartNfts[indexPath.section].price) ETH", nftIndex: indexPath.section,
-                       rating: ratingSetup(ratingInt: storage.mockCartNfts[indexPath.section].rating))
+        cell.cellSetup(nftImageUrl: URL(string: storage.mockCartNfts[indexPath.row].images.first ?? "no url") ?? URL(fileURLWithPath: "no url"),
+                       nftNameLabel: storage.mockCartNfts[indexPath.row].name,
+                       priceValueLabel: "\(storage.mockCartNfts[indexPath.row].price) ETH", nftIndex: indexPath.row,
+                       rating: ratingSetup(ratingInt: storage.mockCartNfts[indexPath.row].rating))
         
         return cell
     }
