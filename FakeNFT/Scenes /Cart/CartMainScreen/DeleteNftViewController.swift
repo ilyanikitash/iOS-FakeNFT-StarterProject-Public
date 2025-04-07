@@ -122,16 +122,13 @@ final class DeleteNftViewController: UIViewController {
     }
     
     @objc func didTapToDelete() {
-        var newMock = storage.mockCartNfts
-        newMock.remove(at: storage.cellIndexToDelete)
-        storage.mockCartNfts = newMock
+        storage.mockCartNfts.remove(at: storage.cellIndexToDelete)
+        NotificationCenter.default.post(name: Notification.Name("tabBar"), object: nil)
         dismissVC()
     }
 
     @objc func dismissVC() {
         self.dismiss(animated: true)
-        NotificationCenter.default.post(name: Notification.Name("tabBar"), object: nil)
-        
     }
     
     func configureView(mainView: UIView) {

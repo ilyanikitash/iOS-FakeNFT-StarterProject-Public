@@ -143,7 +143,7 @@ final class NftCellView: UITableViewCell {
     }
     
     @objc func switchToDeleteNftViewController() {
-        storage.cellIndexToDelete = nftIndex
+        self.storage.cellIndexToDelete = self.nftIndex
         NotificationCenter.default.post(name: Notification.Name("delete"), object: nil)
     }
 }

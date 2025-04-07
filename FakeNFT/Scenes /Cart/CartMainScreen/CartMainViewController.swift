@@ -86,7 +86,7 @@ final class CartMainViewController: UIViewController {
         self.tabBarController?.tabBar.isHidden = false
         cartMainScreenSetup()
         labelsSetup()
-        
+
         self.cartMainViewControllerObserver = NotificationCenter.default.addObserver(
             forName: Notification.Name("delete"),
             object: nil,
@@ -121,6 +121,7 @@ final class CartMainViewController: UIViewController {
             selectedNftCountLabel.isHidden = true
             priceNftLabel.isHidden = true
             payButton.isHidden = true
+            navigationController?.navigationBar.isHidden = true
             
             placeholderLabel.isHidden = false
         } else {
@@ -129,6 +130,7 @@ final class CartMainViewController: UIViewController {
             selectedNftCountLabel.isHidden = false
             priceNftLabel.isHidden = false
             payButton.isHidden = false
+            navigationController?.navigationBar.isHidden = false
             
             placeholderLabel.isHidden = true
         }
@@ -150,9 +152,7 @@ final class CartMainViewController: UIViewController {
     
     private func updateTable() {
         DispatchQueue.main.async { [weak self] in
-            self?.nftListTableView.performBatchUpdates {
-                self?.nftListTableView.deleteRows(at: [IndexPath(row: self?.storage.cellIndexToDelete ?? 0, section: 0)], with: .middle)
-            } completion: { _ in }
+            self?.nftListTableView.reloadData()
         }
     }
     
