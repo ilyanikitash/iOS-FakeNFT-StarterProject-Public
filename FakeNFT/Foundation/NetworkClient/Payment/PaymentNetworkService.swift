@@ -38,6 +38,7 @@ final class PaymentNetworkService {
         
         let task = URLSession.shared.objectTask(for: request) { [weak self] (result: Result<Order, Error>) in
             guard let self else { return }
+            self.task = nil
             switch result {
             case .success(let data):
                 DispatchQueue.main.async {
@@ -89,7 +90,6 @@ final class PaymentNetworkService {
         if task != nil {
             task?.cancel()
         }
-        
         guard let request = makeRequest(string: "\(HttpStrings.payment.rawValue)" + "\(currencyID)",
                                         httpMethod: HttpMethod.get.rawValue),
               task == nil
@@ -131,7 +131,6 @@ final class PaymentNetworkService {
                                         httpMethod: HttpMethod.put.rawValue),
               task == nil
         else {
-            print("PUT Order request error")
             return
         }
         

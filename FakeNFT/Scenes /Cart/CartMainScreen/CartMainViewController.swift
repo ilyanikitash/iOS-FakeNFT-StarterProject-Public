@@ -86,7 +86,7 @@ final class CartMainViewController: UIViewController {
         self.tabBarController?.tabBar.isHidden = false
         cartMainScreenSetup()
         labelsSetup()
-
+        
         self.cartMainViewControllerObserver = NotificationCenter.default.addObserver(
             forName: Notification.Name("delete"),
             object: nil,
@@ -153,6 +153,7 @@ final class CartMainViewController: UIViewController {
     private func updateTable() {
         DispatchQueue.main.async { [weak self] in
             self?.nftListTableView.reloadData()
+            self?.labelsSetup()
         }
     }
     

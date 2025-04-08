@@ -8,7 +8,9 @@
 import UIKit
 
 final class SuccessfulPayScreen: UIViewController {
-        
+    // MARK: - Singletone
+    private let storage = Storage.shared
+    
     // MARK: - Private Properties
     private lazy var successImage: UIImageView = {
         let image = UIImageView()
@@ -81,7 +83,11 @@ final class SuccessfulPayScreen: UIViewController {
     
     // MARK: - Objc Methods
     @objc func backToCatalogAction() {
-        print("test back to catalog button")
-        // toDo: реализация в следующем эпике, не мой экран
+        self.tabBarController?.tabBar.isHidden = false
+        self.tabBarController?.selectedIndex = 0
+        storage.mockCartNfts.removeAll()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            self.navigationController?.popToRootViewController(animated: false)
+        }
     }
 }
