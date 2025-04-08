@@ -25,7 +25,6 @@
 		0CFCB74E2A7817DC0009A829 /* NftStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFCB74D2A7817DC0009A829 /* NftStorage.swift */; };
 		3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F478ECE29DB474E00F6D39E /* Colors.swift */; };
 		3F478ED129DB476500F6D39E /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F478ED029DB476500F6D39E /* Fonts.swift */; };
-		3F603CCD29DB4A53000C43D7 /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 3F603CCC29DB4A53000C43D7 /* ProgressHUD */; };
 		3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F68069629CBBAF100B4F915 /* AppDelegate.swift */; };
 		3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F68069829CBBAF100B4F915 /* SceneDelegate.swift */; };
 		3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F68069A29CBBAF100B4F915 /* ProductDetailsTableViewController.swift */; };
@@ -59,6 +58,9 @@
 		D3E561BD2D90687A00BCFF33 /* WebViewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E561BC2D90687500BCFF33 /* WebViewView.swift */; };
 		D3ED08E92D943DBF00EDD9FF /* NFTCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3ED08E82D943DB500EDD9FF /* NFTCollectionViewController.swift */; };
 		D3ED08EB2D943E2900EDD9FF /* NFTCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3ED08EA2D943E2300EDD9FF /* NFTCollectionView.swift */; };
+		D3FBB6332DA5192F00366A26 /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = D3FBB6322DA5192F00366A26 /* ProgressHUD */; };
+		D3FBB6362DA5196800366A26 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = D3FBB6352DA5196800366A26 /* Kingfisher */; };
+		D3FBB6382DA51D0200366A26 /* UIImage extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FBB6372DA51CF300366A26 /* UIImage extension.swift */; };
 		D3FE781B2D8D3D32002208CD /* UserCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FE781A2D8D3D2A002208CD /* UserCardViewController.swift */; };
 		D3FE781D2D8D3D43002208CD /* UserCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FE781C2D8D3D3A002208CD /* UserCardView.swift */; };
 		D3FE781F2D8D6F71002208CD /* UserCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FE781E2D8D6F65002208CD /* UserCardTableViewCell.swift */; };
@@ -71,7 +73,6 @@
 		EA665D562D90B3A500BF5DA8 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA665D552D90B39C00BF5DA8 /* EditProfileViewController.swift */; };
 		EA665D582D90B48400BF5DA8 /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA665D572D90B47800BF5DA8 /* ProfileService.swift */; };
 		EA665D5A2D90B4A600BF5DA8 /* ProfileRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA665D592D90B49E00BF5DA8 /* ProfileRequest.swift */; };
-		EA665D5D2D9197FB00BF5DA8 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = EA665D5C2D9197FB00BF5DA8 /* Kingfisher */; };
 		EA665D5F2D92DED100BF5DA8 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA665D5E2D92DEAF00BF5DA8 /* EditProfileView.swift */; };
 		EA665D662D98478700BF5DA8 /* My NFT.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA665D652D98476D00BF5DA8 /* My NFT.swift */; };
 		EA665D692D984B3B00BF5DA8 /* MyNFTViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA665D682D984B2E00BF5DA8 /* MyNFTViewController.swift */; };
@@ -158,6 +159,7 @@
 		D3E561BC2D90687500BCFF33 /* WebViewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewView.swift; sourceTree = "<group>"; };
 		D3ED08E82D943DB500EDD9FF /* NFTCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTCollectionViewController.swift; sourceTree = "<group>"; };
 		D3ED08EA2D943E2300EDD9FF /* NFTCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTCollectionView.swift; sourceTree = "<group>"; };
+		D3FBB6372DA51CF300366A26 /* UIImage extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage extension.swift"; sourceTree = "<group>"; };
 		D3FE781A2D8D3D2A002208CD /* UserCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCardViewController.swift; sourceTree = "<group>"; };
 		D3FE781C2D8D3D3A002208CD /* UserCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCardView.swift; sourceTree = "<group>"; };
 		D3FE781E2D8D6F65002208CD /* UserCardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCardTableViewCell.swift; sourceTree = "<group>"; };
@@ -194,8 +196,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA665D5D2D9197FB00BF5DA8 /* Kingfisher in Frameworks */,
-				3F603CCD29DB4A53000C43D7 /* ProgressHUD in Frameworks */,
+				D3FBB6362DA5196800366A26 /* Kingfisher in Frameworks */,
+				D3FBB6332DA5192F00366A26 /* ProgressHUD in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -377,6 +379,7 @@
 		3F6806CE29CBBD1B00B4F915 /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
+				D3FBB6372DA51CF300366A26 /* UIImage extension.swift */,
 				D3D75EC22D8AF6EB0099E9E4 /* SnakeCaseJSONDecoder.swift */,
 				D3D75EC02D8AF68D0099E9E4 /* URLSession + data.swift */,
 				0CFCB74C2A7817C30009A829 /* MemoryStorage */,
@@ -601,8 +604,8 @@
 			);
 			name = FakeNFT;
 			packageProductDependencies = (
-				3F603CCC29DB4A53000C43D7 /* ProgressHUD */,
-				EA665D5C2D9197FB00BF5DA8 /* Kingfisher */,
+				D3FBB6322DA5192F00366A26 /* ProgressHUD */,
+				D3FBB6352DA5196800366A26 /* Kingfisher */,
 			);
 			productName = FakeNFT;
 			productReference = 3F68069329CBBAF100B4F915 /* FakeNFT.app */;
@@ -678,8 +681,8 @@
 			);
 			mainGroup = 3F68068A29CBBAF100B4F915;
 			packageReferences = (
-				3F603CCB29DB4A53000C43D7 /* XCRemoteSwiftPackageReference "ProgressHUD" */,
-				EA665D5B2D9197FB00BF5DA8 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				D3FBB6312DA5192F00366A26 /* XCRemoteSwiftPackageReference "ProgressHUD" */,
+				D3FBB6342DA5196800366A26 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = 3F68069429CBBAF100B4F915 /* Products */;
 			projectDirPath = "";
@@ -738,11 +741,8 @@
 				EA665D6D2D984C5000BF5DA8 /* NFTCell.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
 				0C79EE6A2A76DE1000EE90EA /* NftDetailAssembly.swift in Sources */,
-<<<<<<< HEAD
 				EA665D102D900E2400BF5DA8 /* ProfileViewController.swift in Sources */,
-=======
 				D3BB5F102D843C76007C84DF /* StatisticUsersListViewController.swift in Sources */,
->>>>>>> 09ddba61d04d952381ee5a750f8e5dd4aea69ea5
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
 				D3FE781B2D8D3D32002208CD /* UserCardViewController.swift in Sources */,
 				0CFCB7422A78013E0009A829 /* Nft.swift in Sources */,
@@ -757,6 +757,7 @@
 				0CF2C2DB2A783C1B00FDC837 /* LoadingView.swift in Sources */,
 				EA665D692D984B3B00BF5DA8 /* MyNFTViewController.swift in Sources */,
 				558E39E72C68CE0A00FB86AC /* NftService.swift in Sources */,
+				D3FBB6382DA51D0200366A26 /* UIImage extension.swift in Sources */,
 				D3E561BD2D90687A00BCFF33 /* WebViewView.swift in Sources */,
 				D3ED08EB2D943E2900EDD9FF /* NFTCollectionView.swift in Sources */,
 				D3E561BB2D90687000BCFF33 /* WebViewViewController.swift in Sources */,
@@ -773,11 +774,8 @@
 				3FC8C39129D2453B0081F015 /* ExamplePutRequest.swift in Sources */,
 				EA665D582D90B48400BF5DA8 /* ProfileService.swift in Sources */,
 				0CFCB7462A78064B0009A829 /* NftDetailCellModel.swift in Sources */,
-<<<<<<< HEAD
 				EA665D562D90B3A500BF5DA8 /* EditProfileViewController.swift in Sources */,
-=======
 				D3309ADB2D856E2C0026A80A /* StatisticUsersListTableViewCell.swift in Sources */,
->>>>>>> 09ddba61d04d952381ee5a750f8e5dd4aea69ea5
 				0CFCB74B2A780EA80009A829 /* UIView+Constraints.swift in Sources */,
 				D3309B152D85852E0026A80A /* SortAlertPresenter.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
@@ -981,6 +979,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8HV589XKFV;
+				"FRAMEWORK_SEARCH_PATHS[arch=*]" = "https://github.com/onevcat/Kingfisher";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FakeNFT/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1010,6 +1009,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8HV589XKFV;
+				"FRAMEWORK_SEARCH_PATHS[arch=*]" = "https://github.com/onevcat/Kingfisher";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FakeNFT/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1145,7 +1145,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		3F603CCB29DB4A53000C43D7 /* XCRemoteSwiftPackageReference "ProgressHUD" */ = {
+		D3FBB6312DA5192F00366A26 /* XCRemoteSwiftPackageReference "ProgressHUD" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/relatedcode/ProgressHUD";
 			requirement = {
@@ -1153,7 +1153,7 @@
 				minimumVersion = 13.0.0;
 			};
 		};
-		EA665D5B2D9197FB00BF5DA8 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+		D3FBB6342DA5196800366A26 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher";
 			requirement = {
@@ -1164,14 +1164,14 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		3F603CCC29DB4A53000C43D7 /* ProgressHUD */ = {
+		D3FBB6322DA5192F00366A26 /* ProgressHUD */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 3F603CCB29DB4A53000C43D7 /* XCRemoteSwiftPackageReference "ProgressHUD" */;
+			package = D3FBB6312DA5192F00366A26 /* XCRemoteSwiftPackageReference "ProgressHUD" */;
 			productName = ProgressHUD;
 		};
-		EA665D5C2D9197FB00BF5DA8 /* Kingfisher */ = {
+		D3FBB6352DA5196800366A26 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = EA665D5B2D9197FB00BF5DA8 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			package = D3FBB6342DA5196800366A26 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */

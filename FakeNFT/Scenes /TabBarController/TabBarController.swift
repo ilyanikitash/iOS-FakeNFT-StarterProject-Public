@@ -13,25 +13,26 @@ final class TabBarController: UITabBarController {
         tag: 0
     )
     
-<<<<<<< HEAD
     private let profileTabBarItem = UITabBarItem(
         title: "Профиль",
         image: UIImage(named: "Profile"),
         tag: 0
     )
-=======
     private let statisticTabBarItem = UITabBarItem(
         title: NSLocalizedString("Tab.statistic", comment: ""),
         image: UIImage(named: "tab_statistic"),
         tag: 1)
->>>>>>> 09ddba61d04d952381ee5a750f8e5dd4aea69ea5
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let profileViewController = ProfileViewController(servicesAssembly: servicesAssembly)
-              profileViewController.tabBarItem = profileTabBarItem
-              let profileNavController = UINavigationController(rootViewController: profileViewController)
+        profileViewController.tabBarItem = profileTabBarItem
+        let profileNavController = UINavigationController(rootViewController: profileViewController)
+        
+        let profileImage = UIImage(named: "Profile")?.withRenderingMode(.alwaysOriginal)
+        let resizedImage = profileImage?.resized(to: CGSize(width: 30, height: 30))
+        profileTabBarItem.image = resizedImage
         
         let catalogController = TestCatalogViewController(
             servicesAssembly: servicesAssembly
@@ -42,13 +43,10 @@ final class TabBarController: UITabBarController {
         
         catalogController.tabBarItem = catalogTabBarItem
         statisticUsersListVCNavController.tabBarItem = statisticTabBarItem
-<<<<<<< HEAD
-   //     viewControllers = [catalogController,
-   //                        profileNavController,statisticUsersListVCNavController]
-=======
+
         viewControllers = [catalogController]
         viewControllers?.append(statisticUsersListVCNavController)
->>>>>>> cd3ae01c32b790f468ecbd3d349a48d8ccd40ebf
+        viewControllers?.append(profileNavController)
 
         view.backgroundColor = .systemBackground
     }
