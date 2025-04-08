@@ -22,6 +22,12 @@ final class TabBarController: UITabBarController {
         title: NSLocalizedString("Tab.statistic", comment: ""),
         image: UIImage(named: "tab_statistic"),
         tag: 1)
+    
+    private let cartTabBarItem = UITabBarItem(
+        title: NSLocalizedString("Корзина", comment: ""),
+        image: UIImage(named: "cart"),
+        tag: 0
+    )
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,13 +47,17 @@ final class TabBarController: UITabBarController {
         let statisticUsersListVCNavController = UINavigationController(rootViewController: statisticUsersListVC)
         statisticUsersListVCNavController.setNavigationBarHidden(false, animated: false)
         
+        let cartController = UINavigationController(rootViewController: CartMainViewController())
+        
         catalogController.tabBarItem = catalogTabBarItem
         statisticUsersListVCNavController.tabBarItem = statisticTabBarItem
+        cartController.tabBarItem = cartTabBarItem
 
-        viewControllers = [catalogController]
+        viewControllers = [profileNavController]
+        viewControllers?.append(catalogController)
+        viewControllers?.append(cartController)
         viewControllers?.append(statisticUsersListVCNavController)
-        viewControllers?.append(profileNavController)
-
+        
         view.backgroundColor = .systemBackground
     }
 }
