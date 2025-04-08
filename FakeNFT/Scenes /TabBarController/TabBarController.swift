@@ -13,12 +13,6 @@ final class TabBarController: UITabBarController {
         tag: 0
     )
     
-    private let cartTabBarItem = UITabBarItem(
-        title: NSLocalizedString("Корзина", comment: ""),
-        image: UIImage(named: "cart"),
-        tag: 0
-    )
-    
     private let profileTabBarItem = UITabBarItem(
         title: "Профиль",
         image: UIImage(named: "Profile"),
@@ -31,7 +25,7 @@ final class TabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         let profileViewController = ProfileViewController(servicesAssembly: servicesAssembly)
         profileViewController.tabBarItem = profileTabBarItem
         let profileNavController = UINavigationController(rootViewController: profileViewController)
@@ -43,17 +37,11 @@ final class TabBarController: UITabBarController {
         let catalogController = TestCatalogViewController(
             servicesAssembly: servicesAssembly
         )
-
         let statisticUsersListVC = StatisticUsersListViewController()
         let statisticUsersListVCNavController = UINavigationController(rootViewController: statisticUsersListVC)
         statisticUsersListVCNavController.setNavigationBarHidden(false, animated: false)
         
         catalogController.tabBarItem = catalogTabBarItem
-        
-        let cartController = UINavigationController(rootViewController: CartMainViewController())
-        cartController.tabBarItem = cartTabBarItem
-
-
         statisticUsersListVCNavController.tabBarItem = statisticTabBarItem
 
         viewControllers = [catalogController]

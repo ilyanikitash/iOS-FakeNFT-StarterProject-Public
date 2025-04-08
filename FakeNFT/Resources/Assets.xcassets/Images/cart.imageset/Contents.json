@@ -1,26 +1,16 @@
 {
   "images" : [
     {
-<<<<<<< HEAD
-      "filename" : "ic.svg",
-=======
->>>>>>> 6cbfd2aa4f4919913285ebc3831eb40866c8d70b
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-<<<<<<< HEAD
-=======
       "filename" : "Cart@2x.png",
->>>>>>> 6cbfd2aa4f4919913285ebc3831eb40866c8d70b
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-<<<<<<< HEAD
-=======
       "filename" : "Cart.png",
->>>>>>> 6cbfd2aa4f4919913285ebc3831eb40866c8d70b
       "idiom" : "universal",
       "scale" : "3x"
     }
