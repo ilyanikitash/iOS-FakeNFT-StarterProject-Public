@@ -738,11 +738,8 @@
 				EA665D6D2D984C5000BF5DA8 /* NFTCell.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
 				0C79EE6A2A76DE1000EE90EA /* NftDetailAssembly.swift in Sources */,
-<<<<<<< HEAD
 				EA665D102D900E2400BF5DA8 /* ProfileViewController.swift in Sources */,
-=======
 				D3BB5F102D843C76007C84DF /* StatisticUsersListViewController.swift in Sources */,
->>>>>>> 09ddba61d04d952381ee5a750f8e5dd4aea69ea5
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
 				D3FE781B2D8D3D32002208CD /* UserCardViewController.swift in Sources */,
 				0CFCB7422A78013E0009A829 /* Nft.swift in Sources */,
@@ -773,11 +770,8 @@
 				3FC8C39129D2453B0081F015 /* ExamplePutRequest.swift in Sources */,
 				EA665D582D90B48400BF5DA8 /* ProfileService.swift in Sources */,
 				0CFCB7462A78064B0009A829 /* NftDetailCellModel.swift in Sources */,
-<<<<<<< HEAD
 				EA665D562D90B3A500BF5DA8 /* EditProfileViewController.swift in Sources */,
-=======
 				D3309ADB2D856E2C0026A80A /* StatisticUsersListTableViewCell.swift in Sources */,
->>>>>>> 09ddba61d04d952381ee5a750f8e5dd4aea69ea5
 				0CFCB74B2A780EA80009A829 /* UIView+Constraints.swift in Sources */,
 				D3309B152D85852E0026A80A /* SortAlertPresenter.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
