@@ -17,7 +17,7 @@ final class Storage {
 
     var cellIndexToDelete = Int()
     
-    // мок данные nft для отладки, удалить после 3его эпика
+    // мок данные nft для отладки
     let data = [MockNft(createdAt: "2023-10-08T07:43:22.944Z[GMT]",
                             name: "Rosario Dejesus",
                             images: ["https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/Finn/1.png",
