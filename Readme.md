@@ -79,7 +79,7 @@
 
 ## Корзина
 
-Скринкаст: https://disk.yandex.ru/i/ov_Y9Mugmyg9dg
+Скринкаст корзины: https://disk.yandex.ru/i/ov_Y9Mugmyg9dg
 
 **Экран заказа**
 
