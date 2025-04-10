@@ -48,7 +48,7 @@ final class NFTCollectionViewCell: UICollectionViewCell {
     }()
     private lazy var cartButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "cart"), for: .normal)
+        button.setImage(UIImage(named: "collection_cart"), for: .normal)
         button.addTarget(self, action: #selector(tapCartButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -81,7 +81,7 @@ final class NFTCollectionViewCell: UICollectionViewCell {
     }
     @objc private func tapCartButton() {
         isAddToCart = !isAddToCart
-        cartButton.setImage(UIImage(named: isAddToCart ? "add_cart" : "cart"), for: .normal)
+        cartButton.setImage(UIImage(named: isAddToCart ? "add_cart" : "collection_cart"), for: .normal)
     }
     // MARK: - Public methods
     func configure(with nft: NFTCollectionModel) {
